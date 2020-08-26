@@ -10,3 +10,4 @@ def index():
     return render_template("sklad.html", title = 'Home', user = user)
 
 
+
