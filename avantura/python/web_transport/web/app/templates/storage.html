@@ -15,12 +15,26 @@
       <div class="menu">
 
         {% for action in menu %}
-          <div class="{{action.html_class}}" style="margin-top: 9px;" onclick="{{action.onclick}}">
-            <span class="choice11"></span>
-            <div class="sect1">
-              <a class="per1">{{action.text}}</a>
+          {% if action.html_class %}
+            <div class="{{action.html_class}}" style="margin-top: 9px;" onclick="{{action.onclick}}">
+              <span class="choice11"></span>
+              <div class="sect1">
+                <a class="per1">{{action.text}}</a>
+              </div>
             </div>
-          </div>
+          {% endif %}
+          {% if action.children %}
+          {% for action in action.children %}
+            {% if action.child_name %}
+              <div class="{{action.child_name}}" style="margin-top: 9px;" onclick="{{action.onclick}}">
+                <span class="choice11"></span>
+                <div class="sect1">
+                  <a class="per1">{{action.text}}</a>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+          {% endif %}
         {% endfor %}
         <div class="choice1" style="margin-top: 9px;" onclick="window.location='http://google.com';">
           <span class="choice11">
@@ -100,5 +114,19 @@ $(function() {
   }
   });
 });
+{% for action in menu %}
+  {% if action.html_class %}
+    $(function() {
+      $('.{{action.html_class}}').click(function() {
+        $('.{{action.child_name}}').slideToggle();
+        if ($('.{{action.html_class}}').css('background') == 'rgba(0, 0, 0, 0.05) none repeat scroll 0% 0% / auto padding-box border-box'){
+          $('.{{action.html_class}}').css({'background':''});
+        } else{
+        $('.{{action.html_class}}').css({'background':'rgba(0,0,0,0.05)'});
+      }
+      });
+    });
+  {% endif %}
+{% endfor %}
 </script>
 </html>
