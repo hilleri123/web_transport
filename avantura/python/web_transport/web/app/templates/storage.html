@@ -36,64 +36,6 @@
           {% endfor %}
           {% endif %}
         {% endfor %}
-        <div class="choice1" style="margin-top: 9px;" onclick="window.location='http://google.com';">
-          <span class="choice11">
-          </span>
-            <div class="sect1">
-              <a class="per1">Клиенты</a>
-            </div>
-        </div>
-        <div class="choice1" onclick="">
-          <span class="choice11">
-          </span>
-            <div class="sect1">
-              <a class="per1">Транспорт</a>
-            </div>
-        </div>
-        <div class="choice1" onclick="">
-          <span class="choice11">
-          </span>
-            <div class="sect1">
-              <a class="per1">Финансы</a>
-            </div>
-        </div>
-        <div class="choice1" onclick="">
-          <span class="choice11">
-          </span>
-            <div class="sect1">
-              <a class="per1">Справочники</a>
-            </div>
-        </div>
-        <div class="choice3" onclick="">
-          <span class="choice11">
-          </span>
-            <div class="sect1">
-              <a class="per1">Администрирование</a>
-            </div>
-        </div>
-        <div class="vubor1" onclick="">
-          <span class="choice11">
-          </span>
-            <div class="sect1">
-              <a class="per1">Сотрудники</a>
-            </div>
-        </div>
-        <div class="vubor1" onclick="" >
-          <span class="choice11">
-          </span>
-            <div class="sect1">
-              <a class="per1">Клиенты</a>
-            </div>
-        </div>
-        <div class="choice2" onclick="">
-          <span class="choice11">
-          </span>
-            <div class="sect1">
-              <a class="per1">Выход</a>
-            </div>
-        </div>
-
-
       </div>
   </div>
   <div class="right-corner">
@@ -104,16 +46,6 @@
 </div>
 </body>
 <script>
-$(function() {
-  $('.choice3').click(function() {
-    $('.vubor1').slideToggle();
-    if ($('.choice3').css('background') == 'rgba(0, 0, 0, 0.05) none repeat scroll 0% 0% / auto padding-box border-box'){
-      $('.choice3').css({'background':''});
-    } else{
-    $('.choice3').css({'background':'rgba(0,0,0,0.05)'});
-  }
-  });
-});
 {% for action in menu %}
   {% if action.html_class %}
     $(function() {
