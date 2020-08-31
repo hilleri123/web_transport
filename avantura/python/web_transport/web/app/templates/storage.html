@@ -16,7 +16,7 @@
 
         {% for action in menu %}
           {% if action.html_class %}
-            <div class="{{action.html_class}}" style="margin-top: 9px;" onclick="{{action.onclick}}">
+          <div class="{{action.html_class}} {{action.main_class}}" style="margin-top: 9px;" onclick="{{action.onclick}}">
               <span class="choice11"></span>
               <div class="sect1">
                 <a class="per1">{{action.text}}</a>
@@ -26,7 +26,7 @@
           {% if action.children %}
           {% for action in action.children %}
             {% if action.child_name %}
-              <div class="{{action.child_name}}" style="margin-top: 9px;" onclick="{{action.onclick}}">
+              <div class="{{action.child_name}} {{action.child_action_class}}" style="margin-top: 9px;" onclick="{{action.onclick}}">
                 <span class="choice11"></span>
                 <div class="sect1">
                   <a class="per1">{{action.text}}</a>

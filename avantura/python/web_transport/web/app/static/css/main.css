@@ -75,7 +75,7 @@ position: relative;
     justify-content: space-between;
     align-content: space-between;
 }
-.choice1,.choice3,.choice4,.choice5,.choice2{
+.action_class{
   background: rgba(0,0,0,0);
   height: 66px;
     padding: 0 24px;
@@ -83,65 +83,54 @@ position: relative;
     width: calc(100% - 46px);
     margin: 0 -1px;
 }
-.vubor1,.vubor2,.vubor3,.vubor4,.vubor5,.vubor6{
+.child_action_class{
   padding-left: 74px;
   height: 30px;
-    padding-right: 24px;
-    cursor: pointer;
-    width: calc(100% - 96px);
-    margin: 0 -1px;
-    display: none;
+  padding-right: 24px;
+  cursor: pointer;
+  width: calc(100% - 96px);
+  margin: 0 -1px;
+  display: none;
 }
 
-.vubor1:hover,.vubor2:hover,.vubor3:hover,.vubor4:hover,.vubor5:hover,.vubor6:hover{
+.child_action_class:hover{
   background: rgba(0,0,0,0.05);
 }
-.choice1:hover,.choice6:hover,.choice5:hover,.choice4:hover{
+.action_class:hover{
   background: rgba(0,0,0,0.049);
 }
-.choice3:hover{
-  background: rgba(0,0,0,0.049);
-}
-.choice6:hover{
-  background: rgba(0,0,0,0.049);
-}
-.choice6{
-  height: 66px;
-    padding: 0 24px;
-    cursor: pointer;
-    position: absolute;
-    bottom:9px;
-    right:0;
-    width: calc(100% - 46px);
-    margin: 0 -1px;
+.parent5{
+  position: absolute;
+  bottom:9px;
+  right:0;
 }
 .choice11{
   background-position: center center;
   background-image: url(../icons/1.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    display: inline-block;
-    height: 25px;
-    margin-right: 24px;
-    text-align: center;
-    vertical-align: middle;
-    width: 25px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
+  height: 25px;
+  margin-right: 24px;
+  text-align: center;
+  vertical-align: middle;
+  width: 25px;
 }
 .red{
   background-position: center center;
   background-image: url(../icons/red.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    display: inline-block;
-    height: 30px;
-    right:0px;
-    position: absolute;
-    cursor: pointer;
-    margin-top: 30px;
-    margin-right: 104px;
-    text-align: center;
-    vertical-align: middle;
-    width: 30px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
+  height: 30px;
+  right:0px;
+  position: absolute;
+  cursor: pointer;
+  margin-top: 30px;
+  margin-right: 104px;
+  text-align: center;
+  vertical-align: middle;
+  width: 30px;
 }
 .plus{
   background-position: center center;
@@ -172,23 +161,18 @@ position: relative;
     text-decoration: none;
     color: #333;
 }
-.choice1:before,.choice3:before{
+
+.action_class{
   display: inline-block;
-  height: 100%;
   vertical-align: middle;
-content: '';
+  content: '';
 }
-.choice2:before,.choice6:before,.choice5:before,.choice4:before{
+.child_action_class,{
   display: inline-block;
   height: 100%;
   vertical-align: middle;
-content: '';
+  content: '';
 }
-.vubor1:before,.vubor2:before,.vubor3:before,.vubor4:before,.vubor5:before,.vubor6:before{
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-content: '';}
 .texter{
   font-size: 24px;
     color: #000;

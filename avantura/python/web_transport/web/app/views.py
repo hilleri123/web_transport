@@ -7,8 +7,10 @@ from app import app
 
 class MenuAction():
     def __init__(self, num = 0, text = 'POPA', onclick = '', children = []):
-        self.html_class = 'choice'+str(num+1)
-        self.child_name = 'vubor'+str(num+1)
+        self.main_class = 'action_class'
+        self.child_action_class = 'child_action_class'
+        self.html_class = 'parent'+str(num)
+        self.child_name = 'child'+str(num)
         self.onclick = onclick
         self.text = text
 
