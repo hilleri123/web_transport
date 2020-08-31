@@ -7,8 +7,8 @@ from app import app
 
 class MenuAction():
     def __init__(self, num = 0, text = 'POPA', onclick = '', children = []):
-        self.html_class = 'parent'+str(num)
-        self.child_name = 'child'+str(num)
+        self.html_class = 'choice'+str(num+1)
+        self.child_name = 'vubor'+str(num+1)
         self.onclick = onclick
         self.text = text
 
@@ -59,6 +59,3 @@ def index():
     user = {'nickname' : 'Burgers'}
     #return render_template("index.html", title = 'Home', user = user)
     return render_template("storage.html", menu = create_main_menu())
-
-
-

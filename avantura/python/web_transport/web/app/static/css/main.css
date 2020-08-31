@@ -75,7 +75,7 @@ position: relative;
     justify-content: space-between;
     align-content: space-between;
 }
-.choice1,.choice3,.choice4,.choice5,.choice6{
+.choice1,.choice3,.choice4,.choice5,.choice2{
   background: rgba(0,0,0,0);
   height: 66px;
     padding: 0 24px;
@@ -83,16 +83,17 @@ position: relative;
     width: calc(100% - 46px);
     margin: 0 -1px;
 }
-.vubor1{
+.vubor1,.vubor2,.vubor3,.vubor4,.vubor5,.vubor6{
   padding-left: 74px;
-  height: 66px;
+  height: 30px;
     padding-right: 24px;
     cursor: pointer;
     width: calc(100% - 96px);
     margin: 0 -1px;
     display: none;
 }
-.vubor1:hover{
+
+.vubor1:hover,.vubor2:hover,.vubor3:hover,.vubor4:hover,.vubor5:hover,.vubor6:hover{
   background: rgba(0,0,0,0.05);
 }
 .choice1:hover,.choice6:hover,.choice5:hover,.choice4:hover{
@@ -101,10 +102,10 @@ position: relative;
 .choice3:hover{
   background: rgba(0,0,0,0.049);
 }
-.choice2:hover{
+.choice6:hover{
   background: rgba(0,0,0,0.049);
 }
-.choice2{
+.choice6{
   height: 66px;
     padding: 0 24px;
     cursor: pointer;
@@ -183,7 +184,7 @@ content: '';
   vertical-align: middle;
 content: '';
 }
-.vubor1:before{
+.vubor1:before,.vubor2:before,.vubor3:before,.vubor4:before,.vubor5:before,.vubor6:before{
   display: inline-block;
   height: 100%;
   vertical-align: middle;

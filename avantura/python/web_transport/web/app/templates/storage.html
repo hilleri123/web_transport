@@ -40,6 +40,175 @@
   </div>
   <div class="right-corner">
     <div class="menu1">
+        <div class="texter">
+          Товары
+        </div>
+        <span class="red" onclick="javascript:PopUpShow()">
+        </span>
+        <span class="plus" onclick="window.location='http://google.com';">
+        </span>
+        <div class="table1">
+        <table>
+      <tr>
+        <th>Наименование товара</th>
+        <th>Группа товаров</th>
+        <th>Кол-во (по умолчанию)</th>
+      </tr>
+      <tr>
+        <td>Импорт роза</td>
+        <td>Импорт роза</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Линейка 20 см</td>
+        <td>30,00</td>
+      </tr>
+    </table>
+  </div>
+  </div>
+  </div>
+  </div>
+  <div class="b-popup" id="popup1">
+      <div class="b-popup-content">
+        <div class="dd1">
+          Добавить товар
+        </div>
+         <div class=dd2>
+           Наименование
+           <input type="text" size="40">
+         </div>
+         <div class=dd3>
+           Группа товаров
+         </div>
+         <div class=dd4>
+           Кол-во на паллете
+           <input type="text" size="40">
+         </div>
+         <div class=cancel>
+           <a href="javascript:PopUpHide()" class="button7">Отменить</a>
+         </div>
+         <div class="cancel0">
+           <a href="#" class="button7">Сохранить</a>
+         </div>
+
+      </div>
+  </div>
     </div>
 </div>
 </div>
@@ -60,5 +229,19 @@
     });
   {% endif %}
 {% endfor %}
+</script>
+<script>
+    $(document).ready(function(){
+        //Скрыть PopUp при загрузке страницы
+        PopUpHide();
+    });
+    //Функция отображения PopUp
+    function PopUpShow(){
+        $("#popup1").show();
+    }
+    //Функция скрытия PopUp
+    function PopUpHide(){
+        $("#popup1").hide();
+    }
 </script>
 </html>
