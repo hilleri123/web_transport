@@ -85,7 +85,7 @@ position: relative;
 }
 .child_action_class{
   padding-left: 74px;
-  height: 30px;
+  height: 45px;
   padding-right: 24px;
   cursor: pointer;
   width: calc(100% - 96px);
@@ -103,6 +103,9 @@ position: relative;
   position: absolute;
   bottom:9px;
   right:0;
+}
+.parent0{
+  margin-top: 9px;
 }
 .choice11{
   background-position: center center;
@@ -162,12 +165,13 @@ position: relative;
     color: #333;
 }
 
-.action_class{
+.action_class:before{
   display: inline-block;
   vertical-align: middle;
   content: '';
+  height: 100%;
 }
-.child_action_class,{
+.child_action_class:before{
   display: inline-block;
   height: 100%;
   vertical-align: middle;
@@ -262,7 +266,7 @@ td {
 }
 .cancel0{
   padding-top:40px;
-  padding-left: 330px;
+  margin-left: 330px;
   font-size: 20px;
   font-weight: 500;
   position: absolute;
