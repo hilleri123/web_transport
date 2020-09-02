@@ -71,7 +71,7 @@ def logout():
 
 
 
-@app.route('/table-add')
+@app.route('/table-add', methods=['GET', 'POST'])
 def table_add():
     dbname = request.args.get('dbname')
     text_element = request.args.get('text_element')
@@ -79,7 +79,7 @@ def table_add():
     flash(text_element)
     add_to_table(dbname, text_element)
 
-    return 
+    return ('', 204)
 
 
 
@@ -88,9 +88,5 @@ def table():
     dbname = request.args.get('dbname')
 
     #tmp_list = Table(['Наименование товара', 'Группа товара', 'Кол-во (по умолчанию)'], [[text, 'popa', i] for i in range(10)])
-    
+
     return render_template('table.html', source=create_table_content(dbname))
-
-
-
-
