@@ -26,22 +26,22 @@
 
         {% for action in menu %}
           {% if action.html_class %}
-          <div class="{{action.html_class}} {{action.main_class}}" onclick="{{action.onclick}}">
+          <div class="{{action.html_class}} {{action.main_class}} {{action.unique_class}}" onclick="{{action.onclick}}">
+            <span class="choice11"></span>
+            <div class="sect1">
+              <a class="per1">{{action.text}}</a>
+            </div>
+          </div>
+          {% endif %}
+          {% if action.children %}
+          {% for action in action.children %}
+            {% if action.child_name %}
+            <div class="{{action.child_name}} {{action.child_action_class}} {{action.unique_class}}"  onclick="{{action.onclick}}">
               <span class="choice11"></span>
               <div class="sect1">
                 <a class="per1">{{action.text}}</a>
               </div>
             </div>
-          {% endif %}
-          {% if action.children %}
-          {% for action in action.children %}
-            {% if action.child_name %}
-              <div class="{{action.child_name}} {{action.child_action_class}}"  onclick="{{action.onclick}}">
-                <span class="choice11"></span>
-                <div class="sect1">
-                  <a class="per1">{{action.text}}</a>
-                </div>
-              </div>
             {% endif %}
           {% endfor %}
           {% endif %}
@@ -127,21 +127,23 @@
 <script>
 {% for action in menu %}
   {% if action.html_class %}
-  $(function() {
-    $('.{{action.child_name}}').click(function() {
-      $.ajax({
-        url: '/table',
-        type: 'get',
-        data: {jsdata: '{{action.text}}'},
-        success: function(response) {
-          $('#place_for_table').html(response);
-        },
-        error: function(xhr) {
-          //Grisha do something
-        }
+    {% for action in action.children %}
+    $(function() {
+      $('.{{action.unique_class}}').click(function() {
+        $.ajax({
+          url: '/table',
+          type: 'get',
+          data: {jsdata: '{{action.unique_class}}'},
+          success: function(response) {
+            $('#place_for_table').html(response);
+          },
+          error: function(xhr) {
+            //Grisha do something
+          }
+        });
       });
     });
-  });
+    {% endfor %}
   {% endif %}
 {% endfor %}
 </script>
