@@ -133,7 +133,7 @@
         $.ajax({
           url: '/table',
           type: 'get',
-          data: {jsdata: '{{action.unique_class}}'},
+          data: {dbname: '{{action.unique_class}}'},
           success: function(response) {
             $('#place_for_table').html(response);
           },

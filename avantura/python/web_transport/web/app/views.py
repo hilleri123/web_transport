@@ -6,7 +6,7 @@ from app import app, db, lm, oid
 from .forms import LoginForm
 from .models import User, ROLE_USER, ROLE_ADMIN
 from .menu import create_main_menu
-from .tables import create_table_content
+from .tables import create_table_content, add_to_table
 
 
 
@@ -71,15 +71,25 @@ def logout():
 
 
 
+@app.route('/table-add')
+def table_add():
+    dbname = request.args.get('dbname')
+    text_element = request.args.get('text_element')
+
+    flash(text_element)
+    add_to_table(dbname, text_element)
+
+    return 
+
 
 
 @app.route('/table')
 def table():
-    text = request.args.get('jsdata')
+    dbname = request.args.get('dbname')
 
     #tmp_list = Table(['Наименование товара', 'Группа товара', 'Кол-во (по умолчанию)'], [[text, 'popa', i] for i in range(10)])
     
-    return render_template('table.html', source=create_table_content(text))
+    return render_template('table.html', source=create_table_content(dbname))
 
 
 
