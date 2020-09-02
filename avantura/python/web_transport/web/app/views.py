@@ -27,7 +27,8 @@ def login():
     #if form.validate_on_submit():
         #session['remember_me'] = form.remember_me.data
         #return oid.try_login(form.openid.data, ask_for = ['nickname', 'email'])
-    return render_template("login.html", title = 'sign in', form = form, providers = app.config['OPENID_PROVIDERS'])
+    #return render_template("login.html", title = 'sign in', form = form, providers = app.config['OPENID_PROVIDERS'])
+    return render_template("login.html", title = 'sign in', form = form)
 
 
 
