@@ -22,4 +22,33 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post %r>' % (self.body)
 
+class Product_groups(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(140))
+
+    def get_visible_clm_names():
+        return ['Группа товара']
+
+    def get_visible_data():
+        return [[i.name] for i in __class__.query.all()]
+
+    def __repr__(self):
+        return '<Product %r>' % (self.name)
+
+
+class Products(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(140))
+    group_id = db.Column(db.Integer, db.ForeignKey('product_groups.id'))
+    #group_name = db.Column(db.String(140))
+    count = db.Column(db.Integer)
+
+    def get_visible_clm_names():
+        return ['Наименование товара', 'Группа товара', 'Кол-во (по умолчанию)']
+
+    def get_visible_data():
+        return [[i.name, i.group_id, i.count] for i in __class__.query.all()]
+
+    def __repr__(self):
+        return '<Product %r>' % (self.name)
 
