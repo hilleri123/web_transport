@@ -58,38 +58,7 @@
         <span class="plus" onclick="window.location='http://google.com';">
         </span>
         <div class="table1">
-        <table>
-      <tr>
-        <th>Наименование товара</th>
-        <th>Группа товаров</th>
-        <th>Кол-во (по умолчанию)</th>
-      </tr>
-      <tr>
-        <td>Импорт роза</td>
-        <td>Импорт роза</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Линейка 20 см</td>
-        <td>30,00</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Линейка 20 см</td>
-        <td>30,00</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Линейка 20 см</td>
-        <td>30,00</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Линейка 20 см</td>
-        <td>30,00</td>
-      </tr>
-    </table>
+        <div id="place_for_table"></div>
   </div>
   </div>
   </div>
@@ -154,5 +123,26 @@
     function PopUpHide(){
         $("#popup1").hide();
     }
+</script>
+<script>
+{% for action in menu %}
+  {% if action.html_class %}
+  $(function() {
+    $('.{{action.child_name}}').click(function() {
+      $.ajax({
+        url: '/table',
+        type: 'get',
+        data: {jsdata: '{{action.text}}'},
+        success: function(response) {
+          $('#place_for_table').html(response);
+        },
+        error: function(xhr) {
+          //Grisha do something
+        }
+      });
+    });
+  });
+  {% endif %}
+{% endfor %}
 </script>
 </html>
