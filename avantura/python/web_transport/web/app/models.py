@@ -49,6 +49,13 @@ class Products(db.Model):
     def get_visible_data():
         return [[i.name, i.group_id, i.count] for i in __class__.query.all()]
 
+    def add_row(text = ''):
+        spliter = '@'
+        tmp_list = text.split('@')
+        tmp = __class__(tmp_list)
+        db.session.add(tmp)
+        db.session.commit()
+
     def __repr__(self):
         return '<Product %r>' % (self.name)
 
