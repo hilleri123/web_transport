@@ -26,7 +26,10 @@ def create_table_content(text):
     
 
 def add_to_table(text, element = None):
-    pass
+    table = html_class_to_table(text)
+    print(table, dir(table))
+    table.add_row(element)
+    
 
 
 

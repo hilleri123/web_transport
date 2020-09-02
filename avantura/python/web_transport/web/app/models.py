@@ -39,20 +39,21 @@ class Product_groups(db.Model):
 class Products(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(140))
-    group_id = db.Column(db.Integer, db.ForeignKey('product_groups.id'))
-    #group_name = db.Column(db.String(140))
+    #group_id = db.Column(db.Integer, db.ForeignKey('product_groups.id'))
+    group_name = db.Column(db.String(140))
     count = db.Column(db.Integer)
 
     def get_visible_clm_names():
         return ['Наименование товара', 'Группа товара', 'Кол-во (по умолчанию)']
 
     def get_visible_data():
-        return [[i.name, i.group_id, i.count] for i in __class__.query.all()]
+        return [[i.name, i.group_name, i.count] for i in __class__.query.all()]
 
     def add_row(text = ''):
+        print('Adding', text)
         spliter = '@'
         tmp_list = text.split('@')
-        tmp = __class__(tmp_list)
+        tmp = __class__(name=tmp_list[0], group_name=tmp_list[1], count=int(tmp_list[2]))
         db.session.add(tmp)
         db.session.commit()
 
