@@ -119,9 +119,12 @@ position: relative;
   vertical-align: middle;
   width: 25px;
 }
+.corner{
+  margin-left:20px;
+}
 .red{
   background-position: center center;
-  background-image: url(../icons/red.png);
+  background-image: url(../icons/plus1.png);
   background-repeat: no-repeat;
   background-size: contain;
   display: inline-block;
@@ -137,7 +140,7 @@ position: relative;
 }
 .plus{
   background-position: center center;
-  background-image: url(../icons/plus1.png);
+  background-image: url(../icons/red.png);
     background-repeat: no-repeat;
     background-size: contain;
     display: inline-block;
@@ -237,23 +240,14 @@ td {
   text-align: center;
 
 }
-.dd2{
+.dd2,.dd3,.dd4{
   padding-top:40px;
-  padding-left: 20px;
   font-size: 20px;
   font-weight: 500;
 }
-.dd3{
-  padding-top:40px;
-  padding-left: 20px;
-  font-size: 20px;
-  font-weight: 500;
-}
-.dd4{
-  padding-top:40px;
-  padding-left: 20px;
-  font-size: 20px;
-  font-weight: 500;
+.dd5{
+  width: 292.8px;
+  height:22px;
 }
 .cancel{
   padding-top:40px;

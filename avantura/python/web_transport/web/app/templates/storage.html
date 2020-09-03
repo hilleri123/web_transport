@@ -50,8 +50,7 @@
   </div>
   <div class="right-corner">
     <div class="menu1">
-        <div class="texter">
-          Товары
+        <div class="texter" id="texter">
         </div>
         <span class="red" onclick="javascript:PopUpShow()">
         </span>
@@ -69,37 +68,34 @@
         <div class="dd1">
           Добавить товар
         </div>
-         <div class=dd2>
-           Наименование
-           <input type="text" size="40">
+        <div class="corner">
+         <div class="dd2">
+           Наименование:
+           </div>
+           <input type="text" id="fdd2" size="40">
+
+         <div class="dd3">
+           Группа товаров:
          </div>
-         <div class=dd3>
-           Группа товаров
-           <select >
-    <option disabled>Выберите героя</option>
+           <select class="dd5"id=products_select>
+    <option disabled>Выберите группу товара</option>
     <option value="Чебурашка">Чебурашка</option>
     <option value="Крокодил Гена">Крокодил Гена</option>
     <option value="Шапокляк">Шапокляк</option>
     <option value="Крыса Лариса">Крыса Лариса</option>
-    <option value="Крыса Лариса">Крыса Лариса</option>
-    <option value="Крыса Лариса">Крыса Лариса</option>
-    <option value="Крыса Лариса">Крыса Лариса</option>
-    <option value="Крыса Лариса">Крыса Лариса</option>
-    <option value="Крыса Лариса">Крыса Лариса</option>
-    <option value="Крыса Лариса">Крыса Лариса</option>
-    <option value="Крыса Лариса">Крыса Лариса</option>
-    <option value="Крыса Лариса">Крыса Лариса</option>
+    <option value="Крыса Лариса">Rubak</option>
+    <option value="Крыса Лариса">CHOPCHOP</option>
    </select>
-         </div>
-         <div class=dd4>
-           Кол-во на паллете
-           <input type="text" size="40">
-         </div>
+         <div class="dd4">
+           Кол-во на паллете:
+           </div>
+           <input type="text" id="fdd4"size="40">
+</div>
          <div class=cancel>
            <a href="javascript:PopUpHide()" class="button7">Отменить</a>
          </div>
          <div class="cancel0">
-           <a href="#" class="button7">Сохранить</a>
+           <a href="javascript:save()" class="button7">Сохранить</a>
          </div>
 
       </div>
@@ -145,6 +141,11 @@
     {% for action in action.children %}
     $(function {{action.unique_class}}() {
       $('.{{action.unique_class}}').click(function() {
+        var change = document.getElementById("texter");
+        if (change.innerHTML != "{{action.text}}")
+        {
+          change.innerHTML = "{{action.text}}";
+        }
         $.ajax({
           url: '/table',
           type: 'get',
@@ -161,5 +162,27 @@
     {% endfor %}
   {% endif %}
 {% endfor %}
+</script>
+
+<script>
+function save(){
+a=fdd2.value+"@"+document.getElementById('products_select').options[document.getElementById('products_select').selectedIndex].text+"@"+fdd4.value
+$.ajax({
+          url: '/table-add',
+          type: 'get',
+          data: {dbname: 'products', text_element:a},
+          success: function(r){$.ajax({
+          url: '/table',
+          type: 'get',
+          data: {dbname: 'products'},
+        success: function(response) {
+            $('#place_for_table').html(response);
+          }})},
+          error: function(xhr) {
+            //Grisha do something
+          }
+        });
+        $("#popup1").hide();
+      };
 </script>
 </html>
