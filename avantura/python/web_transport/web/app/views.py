@@ -6,7 +6,7 @@ from app import app, db, lm, oid
 from .forms import LoginForm
 from .models import User, ROLE_USER, ROLE_ADMIN
 from .menu import create_main_menu
-from .tables import create_table_content, add_to_table
+from .tables import create_table_content, add_to_table, create_table_edit_form
 
 
 
@@ -90,3 +90,24 @@ def table():
     #tmp_list = Table(['Наименование товара', 'Группа товара', 'Кол-во (по умолчанию)'], [[text, 'popa', i] for i in range(10)])
 
     return render_template('table.html', source=create_table_content(dbname))
+
+
+@app.route('/table-edit-form', methods=['GET', 'POST'])
+def table_edit_form():
+    dbname = request.args.get('dbname')
+
+    return render_template('form.html', form=create_table_edit_form(dbname), dbname=dbname)
+
+
+@app.route('/api/add', methods=['GET', 'POST'])
+def add_function():
+    dbname = request.args.get('dbname')
+    form = create_table_edit_form(dbname)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            if form.cancel.data:
+                return ('', 204) #!!!!!!!!НАДО ЗАКРЫТЬ ОКНО
+            add_to_table(dbname, form)
+
+    return ('', 204)
+

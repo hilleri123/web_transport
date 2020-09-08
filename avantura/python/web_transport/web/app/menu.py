@@ -47,9 +47,9 @@ def create_main_menu():
     handbooks = MenuAction(len(res), 'handbooks', 'Справочники', '', [exchange_rates, product_groups, products, car_types, car_numbers])
     res.append(handbooks)
 
-    admin_employes = MenuAction(len(res), 'admin_employes', 'Сотрудники', '')
+    admin_employees = MenuAction(len(res), 'admin_employes', 'Сотрудники', '')
     admin_clients = MenuAction(len(res), 'admin_clients', 'Клиенты', '')
-    admin = MenuAction(len(res), 'admin', 'Администрирование', '', [admin_employes, admin_clients])
+    admin = MenuAction(len(res), 'admin', 'Администрирование', '', [admin_employees, admin_clients])
     res.append(admin)
 
     exit = MenuAction(len(res), 'exit', 'Выход', '')

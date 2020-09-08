@@ -1,11 +1,31 @@
-from flask_wtf import Form
-from wtforms import TextField, BooleanField
-from wtforms.validators import Required
+from flask_wtf import FlaskForm
+from wtforms import TextField, BooleanField, SelectField, IntegerField, SubmitField
+from wtforms.validators import Required, ValidationError
 
-class LoginForm(Form):
-    openid = TextField('openid', validators = [Required()])
+
+def _required(form, field):
+    if not field.raw_data or not field.raw_data[0]:
+        raise ValidationError('Field is required')
+
+
+class MyForm(FlaskForm):
+    class Meta:
+        csrf = True
+    submit = SubmitField('Ok')
+    cancel = SubmitField('Cancel')
+    
+
+class LoginForm(MyForm):
+    openid = TextField('openid', validators = [_required])
     remember_me = BooleanField('remember_me', default = False)
 
 
+class FProducts(MyForm):
+    name = TextField('Наименование', validators = [_required])
+    group = SelectField('Группа товаров', validators = [_required])
+    count = IntegerField('Кол-во на паллете', validators = [_required])
+
+class FProduct_groups(MyForm):
+    name = TextField('Группа товаров', validators = [_required])
 
 

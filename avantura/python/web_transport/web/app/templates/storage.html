@@ -24,17 +24,17 @@
     <div class="left-corner">
       <div class="menu">
 
-        {% for action in menu %}
-          {% if action.html_class %}
-          <div class="{{action.html_class}} {{action.main_class}} {{action.unique_class}}" onclick="{{action.onclick}}">
+        {% for parent_action in menu %}
+          {% if parent_action.html_class %}
+          <div class="{{parent_action.html_class}} {{parent_action.main_class}} {{parent_action.unique_class}}" onclick="{{parent_action.onclick}}">
             <span class="choice11"></span>
             <div class="sect1">
-              <a class="per1">{{action.text}}</a>
+              <a class="per1">{{parent_action.text}}</a>
             </div>
           </div>
           {% endif %}
-          {% if action.children %}
-          {% for action in action.children %}
+          {% if parent_action.children %}
+          {% for action in parent_action.children %}
             {% if action.child_name %}
             <div class="{{action.child_name}} {{action.child_action_class}} {{action.unique_class}}"  onclick="{{action.onclick}}">
               <span class="choice11"></span>
@@ -65,6 +65,7 @@
 </div>
   <div class="b-popup" id="popup1">
       <div class="b-popup-content">
+        <div id="place_for_edit_form"></div>
         <div class="dd1">
           Добавить товар
         </div>
@@ -106,15 +107,15 @@
 </div>
 </body>
 <script>
-{% for action in menu %}
-  {% if action.html_class %}
+{% for parent_action in menu %}
+  {% if parent_action.html_class %}
     $(function() {
-      $('.{{action.html_class}}').click(function() {
-        $('.{{action.child_name}}').slideToggle();
-        if ($('.{{action.html_class}}').css('background') == 'rgba(0, 0, 0, 0.05) none repeat scroll 0% 0% / auto padding-box border-box'){
-          $('.{{action.html_class}}').css({'background':''});
+      $('.{{parent_action.html_class}}').click(function() {
+        $('.{{parent_action.child_name}}').slideToggle();
+        if ($('.{{parent_action.html_class}}').css('background') == 'rgba(0, 0, 0, 0.05) none repeat scroll 0% 0% / auto padding-box border-box'){
+          $('.{{parent_action.html_class}}').css({'background':''});
         } else{
-        $('.{{action.html_class}}').css({'background':'rgba(0,0,0,0.05)'});
+        $('.{{parent_action.html_class}}').css({'background':'rgba(0,0,0,0.05)'});
       }
       });
     });
@@ -135,23 +136,34 @@
         $("#popup1").hide();
     }
 </script>
-<script>
-{% for action in menu %}
-  {% if action.html_class %}
-    {% for action in action.children %}
+<script>//Таблица + форма
+{% for parent_action in menu %}
+  {% if parent_action.html_class %}
+    {% for action in parent_action.children %}
     $(function {{action.unique_class}}() {
       $('.{{action.unique_class}}').click(function() {
-        var change = document.getElementById("texter");
+        var change = document.getElementById("texter"); //Замена титульника
         if (change.innerHTML != "{{action.text}}")
         {
           change.innerHTML = "{{action.text}}";
         }
-        $.ajax({
+        $.ajax({    //Получение таблицы
           url: '/table',
           type: 'get',
           data: {dbname: '{{action.unique_class}}'},
-          success: function(response) {
+          success: function(response) {  //Установка таблицы
             $('#place_for_table').html(response);
+            $.ajax({        //Получение формы
+              url: '/table-edit-form',
+              type: 'get',
+              data: {dbname: '{{action.unique_class}}'},
+              success: function(response) {
+                $('#place_for_edit_form').html(response);
+              },
+              error: function(xhr) {
+                //Grisha do something
+              }
+            })
           },
           error: function(xhr) {
             //Grisha do something
