@@ -150,12 +150,7 @@ class QProducts():
         return [[i.name, Product_groups.query.get(i.group_id).name, i.count] for i in Products.query.all()]
 
     def add_row(form):
-        print('Adding', form)
         value = dict(form.group.choices).get(form.group.data)
-        print(form.group.choices, form.group.data)
-        print(value)
-        #spliter = '@'
-        #tmp_list = text.split('@')
         tmp = Products(name=form.name.data, group_id=form.group.data, count=form.count.data)
         db.session.add(tmp)
         db.session.commit()
