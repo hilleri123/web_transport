@@ -147,19 +147,22 @@ class QProducts():
         return ['Наименование товара', 'Группа товара', 'Кол-во (по умолчанию)']
 
     def get_visible_data():
-        return [[i.name, 'aa', i.count] for i in Products.query.all()]
+        return [[i.name, Product_groups.query.get(i.group_id).name, i.count] for i in Products.query.all()]
 
     def add_row(form):
         print('Adding', form)
+        value = dict(form.group.choices).get(form.group.data)
+        print(form.group.choices, form.group.data)
+        print(value)
         #spliter = '@'
         #tmp_list = text.split('@')
-        #tmp = Products(name=form.data.get('name'), group_name=, count=int(tmp_list[2]))
-        #db.session.add(tmp)
-        #db.session.commit()
+        tmp = Products(name=form.name.data, group_id=form.group.data, count=form.count.data)
+        db.session.add(tmp)
+        db.session.commit()
 
     def form():
         res = FProducts()
-        res.group.choices = [i.name for i in Product_groups.query.all()]
+        res.group.choices = [(i.id, i.name) for i in Product_groups.query.all()]
         return res
 
 
@@ -174,7 +177,7 @@ class QCar_types():
 
     def add_row(form):
         print('Adding', form)
-        tmp = Car_types(type=form.data.get('name'))
+        tmp = Car_types(type=form.name.data)
         db.session.add(tmp)
         db.session.commit()
 

@@ -3,17 +3,24 @@
 
   {{ form.csrf_token }}
 
-    {% for field in form if field.name != "csrf_token" and field.name != "submit" and field.name != "cancel" %}
-	<p>{{ field.label() }}</p>
-	<p>{{ field }}
+  <div class="dd1">{{form.form_name}}</div>
+    
+  {% for field in form if field.name != "csrf_token" and field.name != "submit" and field.name != "cancel" %}
+	  <div class="dd2 corner">{{ field.label() }}</div>
+	  <div class="corner">
+      {% if field.type in ['SelectField'] %}
+        {{ field(class_="dd5") }}
+      {% else %}
+        {{ field(size=40, class_="") }}
+      {% endif %}
 	    {% for error in field.errors %}
-		{{ error }}
+		    {{ error }}
 	    {% endfor %}
-	</p>
-    {% endfor %}
+	  </div>
+  {% endfor %}
 
-  <p>{{ form.submit }}</p>
-  <p>{{ form.cancel }}</p>
+  <div>{{ form.submit(class_="button7") }}</div>
+  <div>{{ form.cancel(class_="button7", 'formnovalidate') }}</div>
 
 </form>
 
