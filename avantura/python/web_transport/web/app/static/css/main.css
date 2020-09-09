@@ -249,6 +249,9 @@ td {
   width: 292.8px;
   height:22px;
 }
+input{
+
+}
 .cancel{
   padding-top:40px;
   padding-left: 20px;
@@ -260,7 +263,7 @@ td {
 }
 .cancel0{
   padding-top:40px;
-  margin-left: 330px;
+  margin-left: 340px;
   font-size: 20px;
   font-weight: 500;
   position: absolute;
@@ -273,18 +276,22 @@ td {
   font-size: 20px;
   font-weight: 500;
 }
-a.button7 {
+.button7 {
   font-weight: 700;
   color: white;
+  cursor:pointer;
+  border-color: #fff0;
   text-decoration: none;
+  width: 140px;
+  height: 57.4px;
   padding: .8em 1em calc(.8em + 3px);
   border-radius: 3px;
   background: rgb(64,199,129);
   box-shadow: 0 -3px rgb(53,167,110) inset;
   transition: 0.2s;
 }
-a.button7:hover { background: rgb(53, 167, 110); }
-a.button7:active {
+.button7:hover { background: rgb(53, 167, 110); }
+.button7:active {
   background: rgb(33,147,90);
   box-shadow: 0 3px rgb(33,147,90) inset;
 }
