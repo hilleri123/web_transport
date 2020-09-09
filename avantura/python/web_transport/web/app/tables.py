@@ -9,11 +9,16 @@ class Table():
 
 def html_class_to_table(text):
     #print(text)
-    if text == QProducts.name():
-        return QProducts
-    if text == QProduct_groups.name():
-        return QProduct_groups
-    return text
+    for i in MainQueryHandler.__subclasses__():
+        if text == i.name():
+            print('!'*50, '\n', i)
+            return i
+    #if text == QProducts.name():
+        #return QProducts
+    #if text == QProduct_groups.name():
+        #return QProduct_groups
+    print('!'*50, '\n', text)
+    return MainQueryHandler
 
 
 

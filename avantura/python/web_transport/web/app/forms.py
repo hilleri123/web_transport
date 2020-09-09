@@ -32,9 +32,14 @@ class FProduct_groups(MyForm):
     form_name = "Добавить группу товаров"
 
 
-class FProduct_groups(MyForm):
-    name = TextField('Тип машины', validators = [_required])
+class FCar_types(MyForm):
+    car_type = TextField('Тип машины', validators = [_required])
     form_name = "Добавить тип машины"
 
+
+class FCar_numbers(MyForm):
+    number = TextField('Номер машины', validators = [_required])
+    car_type = SelectField('Тип машины', validators = [_required])
+    form_name = "Добавить машину"
 
 

@@ -55,7 +55,7 @@ class Product_groups(db.Model):
 
 class Products(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(256))
+    name = db.Column(db.String(256), unique = True)
     group_id = db.Column(db.Integer, db.ForeignKey('product_groups.id'))
     count = db.Column(db.Integer)
 
@@ -65,12 +65,12 @@ class Products(db.Model):
 
 class Car_types(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    car_type = db.Column(db.String(256))
+    car_type = db.Column(db.String(256), unique = True)
 
 
 class Car_numbers(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    number = db.Column(db.String(256))
+    number = db.Column(db.String(256), unique = True)
     type_id = db.Column(db.Integer, db.ForeignKey('car_types.id'))
 
 

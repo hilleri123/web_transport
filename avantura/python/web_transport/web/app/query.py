@@ -6,11 +6,28 @@ from .forms import *
 ROLE_USER = 0
 ROLE_ADMIN = 1
 
-class QUser():
+class MainQueryHandler():
+    def name():
+        return ''
+
+    def get_visible_clm_names():
+        return []
+
+    def get_visible_data():
+        return [[]]
+
+    def add_row(form):
+        pass
+
+    def form():
+        return MyForm()
+
+
+class QUser(MainQueryHandler):
     pass
 
 
-class QClients():
+class QClients(MainQueryHandler):
     def get_visible_clm_names():
         return ['Группа товара']
 
@@ -28,7 +45,10 @@ class QClients():
 
 
 
-class QCars():
+class QCars(MainQueryHandler):
+    def name():
+        return 'cars'
+
     def get_visible_clm_names():
         return ['Машина', 'Тип машины', 'Дата поступления', 'Дата закрытия']
 
@@ -44,7 +64,7 @@ class QCars():
 
 
 
-class QPrepared_cars():
+class QPrepared_cars(MainQueryHandler):
     def name():
         return 'prepared_cars'
 
@@ -64,7 +84,7 @@ class QPrepared_cars():
 
 
 
-class QSpent_cars():
+class QSpent_cars(MainQueryHandler):
     def get_visible_clm_names():
         return ['Машина', 'Тип машины', 'Дата поступления', 'Дата закрытия']
 
@@ -81,7 +101,7 @@ class QSpent_cars():
 
 
 
-class QFinances():
+class QFinances(MainQueryHandler):
     def get_visible_clm_names():
         return ['Группа товара']
 
@@ -98,7 +118,7 @@ class QFinances():
 
 
 
-class QExchange_rates():
+class QExchange_rates(MainQueryHandler):
     def get_visible_clm_names():
         return ['Дата', 'Курс доллара', 'Курс евро', 'Комментарий', 'Автор изменений']
 
@@ -115,7 +135,7 @@ class QExchange_rates():
 
 
 
-class QProduct_groups():
+class QProduct_groups(MainQueryHandler):
     def name():
         return 'product_groups'
 
@@ -139,7 +159,7 @@ class QProduct_groups():
 
 
 
-class QProducts():
+class QProducts(MainQueryHandler):
     def name():
         return 'products'
 
@@ -152,8 +172,11 @@ class QProducts():
     def add_row(form):
         value = dict(form.group.choices).get(form.group.data)
         tmp = Products(name=form.name.data, group_id=form.group.data, count=form.count.data)
-        db.session.add(tmp)
-        db.session.commit()
+        try:
+            db.session.add(tmp)
+            db.session.commit()
+        except sqlalchemy.exc.IntegrityError:
+            print("Products try except!!!!!!") #!!!!!!!!!!
 
     def form():
         res = FProducts()
@@ -163,38 +186,57 @@ class QProducts():
 
 
 
-class QCar_types():
+class QCar_types(MainQueryHandler):
+    def name():
+        return 'car_types'
+
     def get_visible_clm_names():
         return ['Тип машины']
 
     def get_visible_data():
-        return [[i.type] for i in Car_types.query.all()]
+        return [[i.car_type] for i in Car_types.query.all()]
 
     def add_row(form):
-        print('Adding', form)
-        tmp = Car_types(type=form.name.data)
-        db.session.add(tmp)
-        db.session.commit()
+        tmp = Car_types(car_type=form.car_type.data)
+        try:
+            db.session.add(tmp)
+            db.session.commit()
+        except sqlalchemy.exc.IntegrityError:
+            print("Car_types try except!!!!!!") #!!!!!!!!!!
+
+    def form():
+        return FCar_types()
 
 
-class QCar_numbers():
+class QCar_numbers(MainQueryHandler):
+    def name():
+        return 'car_numbers'
+
     def get_visible_clm_names():
         return ['Номер машины', 'Тип машины']
 
     def get_visible_data():
-        return [[i.number, i.type_id] for i in Car_numbers.query.all()]
+        return [[i.number, Car_types.query.get(i.type_id).car_type] for i in Car_numbers.query.all()]
 
     def add_row(text = ''):
-        print('Adding', text)
-        spliter = '@'
-        tmp_list = text.split('@')
-        #tmp = Car_numbers(name=tmp_list[0], group_name=tmp_list[1], count=int(tmp_list[2]))
-        #db.session.add(tmp)
-        #db.session.commit()
+        tmp = Car_types(number=form.number.data, type_id=form.car_types.data)
+        try:
+            db.session.add(tmp)
+            db.session.commit()
+        except sqlalchemy.exc.IntegrityError:
+            print("Car_numbers try except!!!!!!") #!!!!!!!!!!
+
+    def form():
+        res = FCar_numbers()
+        res.car_types.choices = [(i.id, i.car_type) for i in Car_types.query.all()]
+        return res
 
 
 
-class QAdmin_employees():
+class QAdmin_employees(MainQueryHandler):
+    def name():
+        return 'admin_employees'
+
     def get_visible_clm_names():
         return ['Группа товара']
 
@@ -212,7 +254,10 @@ class QAdmin_employees():
 
 
 
-class QAdmin_clients():
+class QAdmin_clients(MainQueryHandler):
+    def name():
+        return 'admin_clients'
+
     def get_visible_clm_names():
         return ['Группа товара']
 
@@ -232,7 +277,10 @@ class QAdmin_clients():
 
 
 
-class QAdmin():
+class QAdmin(MainQueryHandler):
+    def name():
+        return 'admin'
+
     def get_visible_clm_names():
         return ['Группа товара']
 
