@@ -28,7 +28,8 @@ class MenuAction():
 def create_main_menu():
     res = []
 
-    clients = MenuAction(len(res), 'clients', 'Клиенты', '')
+    clients_child = MenuAction(len(res), 'clients', 'Клиенты', '')
+    clients = MenuAction(len(res), 'clients_main', 'Клиенты', '', [clients_child])
     res.append(clients)
 
     prepared_cars = MenuAction(len(res), 'prepared_cars', 'Предварительные', '')

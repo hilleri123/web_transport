@@ -7,6 +7,9 @@ ROLE_USER = 0
 ROLE_ADMIN = 1
 
 class MainQueryHandler():
+    table_html = 'table.html'
+    form_html = 'form.html'
+
     def name():
         return ''
 
@@ -28,21 +31,28 @@ class QUser(MainQueryHandler):
 
 
 class QClients(MainQueryHandler):
+    form_html = 'client_form.html'
+
+    def name():
+        return 'clients'
+
     def get_visible_clm_names():
-        return ['Группа товара']
+        return ['Маркировкa','Личные данные','Телефон', 'E-mail', 'Комментарий']
 
     def get_visible_data():
-        return [[i.name] for i in __class__.query.all()]
+        return [[i.brand, ' '.join([i.Fname, i.Iname, i.Oname]), i.phone, i.email, i.comment] for i in Clients.query.all()]
 
-    def add_row(text = ''):
-        print('Adding', text)
-        spliter = '@'
-        tmp_list = text.split('@')
-        tmp = __class__(name=tmp_list[0], group_name=tmp_list[1], count=int(tmp_list[2]))
-        db.session.add(tmp)
-        db.session.commit()
+    def add_row(form):
+        #tmp = Product_groups(name=form.data.get('name'))
+        tmp = Clients(brand=form.brand.data, Fname=form.Fname.data, Iname=form.Iname.data, Oname=form.Oname.data, phone=form.phone.data, email = form.email.data, comment = form.comment.data)
+        try:
+            db.session.add(tmp)
+            db.session.commit()
+        except sqlalchemy.exc.IntegrityError:
+            print("Product_groups try except!!!!!!") #!!!!!!!!!!
 
-
+    def form():
+        return FClients()
 
 
 class QCars(MainQueryHandler):

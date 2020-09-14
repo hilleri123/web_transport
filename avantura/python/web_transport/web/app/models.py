@@ -8,15 +8,40 @@ class User(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
     nickname = db.Column(db.String(64), index = True, unique = True)
     email = db.Column(db.String(128), index = True, unique = True)
+    client = db.Column(db.Integer, db.ForeignKey('clients.id'), nullable = True)
     role = db.Column(db.SmallInteger, default = ROLE_USER)
 
 
 
 class Clients(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
-    nickname = db.Column(db.String(64), index = True, unique = True)
+    brand = db.Column(db.String(256))
+    #FIO
+    Fname = db.Column(db.String(64))
+    Iname = db.Column(db.String(64))
+    Oname = db.Column(db.String(64))
+    #nickname = db.Column(db.String(64), index = True, unique = True)
+    phone = db.Column(db.String(32), nullable = True)
     email = db.Column(db.String(128), index = True, unique = True)
-    role = db.Column(db.SmallInteger, default = ROLE_USER)
+    comment = db.Column(db.String(2048), nullable = True)
+    #role = db.Column(db.SmallInteger, default = ROLE_USER)
+
+class Client_products(db.Model):
+    id = db.Column(db.Integer,  primary_key = True)
+    client = db.Column(db.Integer, db.ForeignKey('clients.id'))
+    product = db.Column(db.Integer, db.ForeignKey('products.id'))
+    count = db.Column(db.Integer)
+    
+
+
+class Client_rates(db.Model):
+    id = db.Column(db.Integer,  primary_key = True)
+    starts = db.Column(db.DateTime())
+    client = db.Column(db.Integer, db.ForeignKey('clients.id'))
+    product = db.Column(db.Integer, db.ForeignKey('product_groups.id'))
+    price = db.Column(db.Float)
+    
+
 
 
 
