@@ -218,8 +218,8 @@ class QCar_numbers(MainQueryHandler):
     def get_visible_data():
         return [[i.number, Car_types.query.get(i.type_id).car_type] for i in Car_numbers.query.all()]
 
-    def add_row(text = ''):
-        tmp = Car_types(number=form.number.data, type_id=form.car_types.data)
+    def add_row(form):
+        tmp = Car_numbers(number=form.number.data, type_id=form.car_type.data)
         try:
             db.session.add(tmp)
             db.session.commit()
@@ -228,7 +228,7 @@ class QCar_numbers(MainQueryHandler):
 
     def form():
         res = FCar_numbers()
-        res.car_types.choices = [(i.id, i.car_type) for i in Car_types.query.all()]
+        res.car_type.choices = [(i.id, i.car_type) for i in Car_types.query.all()]
         return res
 
 
