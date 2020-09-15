@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import TextField, BooleanField, SelectField, IntegerField, SubmitField, DateTimeField
+from wtforms import TextField, BooleanField, SelectField, IntegerField, SubmitField, RadioField, FloatField, FieldList, FormField
 from wtforms.validators import Required, ValidationError
 
 
@@ -13,12 +13,40 @@ class MyForm(FlaskForm):
     submit = SubmitField('Ok')
     cancel = SubmitField('Cancel')
     form_name = 'form name'
-
+    
 
 class LoginForm(MyForm):
     openid = TextField('openid', validators = [_required])
     remember_me = BooleanField('remember_me', default = False)
     form_name = ""
+
+
+class FClient_rates(FlaskForm):
+    product_group = ''
+    product_group_id = None
+    price = FloatField('Цена', validators = [_required])
+
+
+class FClient_products(FlaskForm):
+    product = RadioField('Включить')
+    product = ''
+    product_id = None
+    price = FloatField('Кол-во', validators = [_required])
+
+
+
+class FClients(MyForm):
+    brand = TextField('Наименование', validators = [_required])
+    Fname = TextField('Фамилия', validators = [_required])
+    Iname = TextField('Имя', validators = [_required])
+    Oname = TextField('Отчество', validators = [_required])
+    phone = TextField('Телефон', validators = [_required])
+    email = TextField('E-mail', validators = [_required])
+    comment = TextField('Комментарий', validators = [_required])
+    rates = FieldList(FormField(FClient_rates))
+    form_name = "Добавить клиента"
+    
+
 
 
 class FProducts(MyForm):
@@ -42,10 +70,4 @@ class FCar_numbers(MyForm):
     car_type = SelectField('Тип машины', validators = [_required])
     form_name = "Добавить машину"
 
-class FExchange_rates(MyForm):
-    date = DateTimeField('Дата', validators = [_required])
-    currency_dollar = IntegerField('Курс доллара', validators = [_required])
-    currency_euro = IntegerField('Курс евро', validators = [_required])
-    comment = TextField('Комментарий', validators = [_required])
-    author = TextField('Автор изменений', validators = [_required])
-    form_name = "Добавить курсы валют"
+

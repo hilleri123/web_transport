@@ -1,6 +1,7 @@
 from app import app, db, lm, oid
 #from .models import Products, Product_groups
 from .query import *
+from flask import render_template
 
 class Table():
     def __init__(self, clm_names=None, data=None):
@@ -11,15 +12,18 @@ def html_class_to_table(text):
     #print(text)
     for i in MainQueryHandler.__subclasses__():
         if text == i.name():
-            print('!'*50, '\n', i)
             return i
-    #if text == QProducts.name():
-        #return QProducts
-    #if text == QProduct_groups.name():
-        #return QProduct_groups
-    print('!'*50, '\n', text)
     return MainQueryHandler
 
+
+def table_html(text):
+    table = html_class_to_table(text)
+    return table.table_html
+
+
+def form_html(text):
+    table = html_class_to_table(text)
+    return table.form_html
 
 
 def create_table_content(text):
