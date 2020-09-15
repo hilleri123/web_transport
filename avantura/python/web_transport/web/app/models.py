@@ -38,10 +38,10 @@ class Finances(db.Model):
 class Exchange_rates(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     date = db.Column(db.DateTime())
-    currency_dollar = db.Column(db.Float())
-    currency_euro = db.Column(db.Float())
+    dollar = db.Column(db.Float())
+    euro = db.Column(db.Float())
     comment = db.Column(db.String(2048), nullable = True)
-    author = db.Column(db.String(256), db.ForeignKey('user.id')) #!!!!!!!!!!!!!!!!!!!!!!
+    author = db.Column(db.Integer, db.ForeignKey('user.id')) #!!!!!!!!!!!!!!!!!!!!!!
 
 
 
@@ -106,3 +106,10 @@ class Admin(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     number = db.Column(db.String(256))
     type_id = db.Column(db.Integer, db.ForeignKey('car_types.id'))
+
+
+
+
+
+
+
