@@ -56,6 +56,3 @@ def create_main_menu():
     res.append(exit)
 
     return res
-
-
-

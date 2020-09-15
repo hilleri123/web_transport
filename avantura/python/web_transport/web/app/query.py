@@ -119,20 +119,24 @@ class QFinances(MainQueryHandler):
 
 
 class QExchange_rates(MainQueryHandler):
+    def name():
+        return 'exchange_rates'
+
     def get_visible_clm_names():
         return ['Дата', 'Курс доллара', 'Курс евро', 'Комментарий', 'Автор изменений']
 
     def get_visible_data():
-        return [[i.date, i.dollar, i.euro, i.comment, i.author] for i in __class__.query.all()]
+        return [[i.date, i.currency_dollar, i.currency_euro, i.comment, i.author] for i in Exchange_rates.query.all()]
 
-    def add_row(text = ''):
-        print('Adding', text)
-        spliter = '@'
-        tmp_list = text.split('@')
-        #tmp = __class__(name=tmp_list[0], group_name=tmp_list[1], count=int(tmp_list[2]))
-        #db.session.add(tmp)
-        #db.session.commit()
-
+    def add_row(form):
+        tmp = Exchange_rates(date=form.date.data, currency_dollar=form.currency_dollar.data, currency_euro=form.currency_euro.data, comment=form.comment.data, author=form.author.data)
+        try:
+            db.session.add(tmp)
+            db.session.commit()
+        except sqlalchemy.exc.IntegrityError:
+                print("Exchange_rates try except!!!!!!") #!!!!!!!!!!
+    def form():
+        return FExchange_rates()
 
 
 class QProduct_groups(MainQueryHandler):
@@ -152,7 +156,6 @@ class QProduct_groups(MainQueryHandler):
             db.session.commit()
         except sqlalchemy.exc.IntegrityError:
             print("Product_groups try except!!!!!!") #!!!!!!!!!!
-
 
     def form():
         return FProduct_groups()
@@ -294,10 +297,3 @@ class QAdmin(MainQueryHandler):
         tmp = __class__(name=tmp_list[0], group_name=tmp_list[1], count=int(tmp_list[2]))
         db.session.add(tmp)
         db.session.commit()
-
-
-
-
-
-
-
