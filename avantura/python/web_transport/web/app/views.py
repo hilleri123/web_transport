@@ -86,6 +86,7 @@ def table_add():
 @app.route('/table')
 def table():
     dbname = request.args.get('dbname')
+    print(dbname)
 
     return render_template(table_html(dbname), source=create_table_content(dbname))
 
