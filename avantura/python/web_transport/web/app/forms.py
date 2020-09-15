@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import TextField, BooleanField, SelectField, IntegerField, SubmitField
+from wtforms import TextField, BooleanField, SelectField, IntegerField, SubmitField, DateTimeField
 from wtforms.validators import Required, ValidationError
 
 
@@ -13,7 +13,7 @@ class MyForm(FlaskForm):
     submit = SubmitField('Ok')
     cancel = SubmitField('Cancel')
     form_name = 'form name'
-    
+
 
 class LoginForm(MyForm):
     openid = TextField('openid', validators = [_required])
@@ -42,4 +42,10 @@ class FCar_numbers(MyForm):
     car_type = SelectField('Тип машины', validators = [_required])
     form_name = "Добавить машину"
 
-
+class FExchange_rates(MyForm):
+    date = DateTimeField('Дата', validators = [_required])
+    currency_dollar = IntegerField('Курс доллара', validators = [_required])
+    currency_euro = IntegerField('Курс евро', validators = [_required])
+    comment = TextField('Комментарий', validators = [_required])
+    author = TextField('Автор изменений', validators = [_required])
+    form_name = "Добавить курсы валют"
