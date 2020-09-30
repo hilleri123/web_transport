@@ -1,4 +1,4 @@
-from app import app, db, lm, oid
+from app import app, db, lm
 #from .models import Products, Product_groups
 from .query import *
 from flask import render_template

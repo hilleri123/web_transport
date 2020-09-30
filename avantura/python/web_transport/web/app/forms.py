@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import TextField, BooleanField, SelectField, IntegerField, SubmitField, RadioField, FloatField, FieldList, FormField, DateTimeField
-from wtforms.validators import Required, ValidationError
+from wtforms import TextField, BooleanField, SelectField, IntegerField, SubmitField, RadioField, FloatField, FieldList, FormField, DateTimeField, PasswordField
+from wtforms.validators import Required, ValidationError, Email, EqualTo
+
+from .models import User
 
 
 def _required(form, field):
@@ -15,10 +17,51 @@ class MyForm(FlaskForm):
     form_name = 'form name'
 
 
-class LoginForm(MyForm):
-    openid = TextField('openid', validators = [_required])
+class LoginForm(FlaskForm):
+    email = TextField('E-mail', validators = [Required(), Email()])
+    password = PasswordField('passwprd', validators = [Required()])
     remember_me = BooleanField('remember_me', default = False)
-    form_name = ""
+    submit = SubmitField('Log in')
+    #form_name = "login"
+
+    def validate(self):
+        initial_validation = super(LoginForm, self).validate()
+        if not initial_validation:
+            return False
+        user = User.query.filter_by(email=self.email.data).first()
+        if not user:
+            self.email.errors.append('Unknown email')
+            return False
+        if not user.verify_password(self.password.data):
+            self.password.errors.append('Invalid password')
+            return False
+        return True
+
+
+class RegisterForm(FlaskForm):
+    username = TextField('Username', validators=[Required()])
+    email = TextField('Email', validators=[Required(), Email()])
+    password = PasswordField('Password', validators=[Required()])
+    confirm = PasswordField('Verify password', validators=[Required(), EqualTo('password', message='Passwords must match')])
+    remember_me = BooleanField('remember_me', default = False)
+    submit = SubmitField('Log in')
+
+
+    def validate(self):
+        initial_validation = super(RegisterForm, self).validate()
+        if not initial_validation:
+            return False
+        user = User.query.filter_by(username=self.username.data).first()
+        if user:
+            self.username.errors.append("Username already registered")
+            return False
+        user = User.query.filter_by(email=self.email.data).first()
+        if user:
+            self.email.errors.append("Email already registered")
+            return False
+        return True
+
+
 
 
 class FClient_rates(FlaskForm):

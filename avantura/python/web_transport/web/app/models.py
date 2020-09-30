@@ -1,15 +1,36 @@
 
 from app import db
 
+from werkzeug.security import check_password_hash, generate_password_hash
+from flask_login import UserMixin
+from . import db, lm
+
+
 ROLE_USER = 0
 ROLE_ADMIN = 1
 
 class User(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
-    nickname = db.Column(db.String(64), index = True, unique = True)
     email = db.Column(db.String(128), index = True, unique = True)
+    nickname = db.Column(db.String(64), unique = True)
+    password_hash = db.Column(db.String(128))
     client = db.Column(db.Integer, db.ForeignKey('clients.id'), nullable = True)
     role = db.Column(db.SmallInteger, default = ROLE_USER)
+
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute')
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+@lm.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 
