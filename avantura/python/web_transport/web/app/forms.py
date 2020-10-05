@@ -120,3 +120,9 @@ class FExchange_rates(MyForm):
     comment = TextField('Комментарий', validators = [_required])
     author = TextField('Автор изменений', validators = [_required])
     form_name = "Добавить курс валют"
+
+class FPrepared_cars(MyForm):
+    car = SelectField('Номер машины', validators = [_required])
+    id_type = SelectField('Тип машины', validators = [_required])
+    date_in = DateTimeField('Дата поступления', validators = [_required])
+    form_name = "Добавить Машину"

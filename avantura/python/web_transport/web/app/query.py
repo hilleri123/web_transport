@@ -79,36 +79,38 @@ class QPrepared_cars(MainQueryHandler):
         return 'prepared_cars'
 
     def get_visible_clm_names():
-        return ['Машина', 'Тип машины', 'Дата поступления', 'Дата закрытия']
+        return ['Машина', 'Тип машины', 'Дата поступления']
 
     def get_visible_data():
-        return [[i.name] for i in Cars.query.all()]
+        return [[i.car, i.id_type, i.date_in] for i in Prepared_cars.query.all()]
 
-    def add_row(text = ''):
-        print('Adding', text)
-        spliter = '@'
-        tmp_list = text.split('@')
-        tmp = __class__(name=tmp_list[0], group_name=tmp_list[1], count=int(tmp_list[2]))
-        db.session.add(tmp)
-        db.session.commit()
-
+    def add_row(form):
+        tmp = Exchange_rates(car=form.car.data, id_type=form.id_type.data, date_in=form.date_in.data)
+        try:
+            db.session.add(tmp)
+            db.session.commit()
+        except sqlalchemy.exc.IntegrityError:
+                print("Prepared_cars try except!!!!!!") #!!!!!!!!!!
+    def form():
+        return FPrepared_cars()
 
 
 class QSpent_cars(MainQueryHandler):
+    def name():
+        return 'spent_cars'
     def get_visible_clm_names():
-        return ['Машина', 'Тип машины', 'Дата поступления', 'Дата закрытия']
+        return ['№', 'Машина', 'Тип машины', 'Дата закрытия']
 
     def get_visible_data():
-        return [[i.name] for i in __class__.query.all()]
+        return [[i.car_id, i.car, i.id_type, i.date_out] for i in Spent_cars.query.all()]
 
-    def add_row(text = ''):
-        print('Adding', text)
-        spliter = '@'
-        tmp_list = text.split('@')
-        tmp = __class__(name=tmp_list[0], group_name=tmp_list[1], count=int(tmp_list[2]))
-        db.session.add(tmp)
-        db.session.commit()
-
+    def add_row(form):
+        tmp = Exchange_rates(car=form.car.data, id_type=form.id_type.data, date_out=form.date_out.data)
+        try:
+            db.session.add(tmp)
+            db.session.commit()
+        except sqlalchemy.exc.IntegrityError:
+                print("Spent_cars try except!!!!!!") #!!!!!!!!!!
 
 
 class QFinances(MainQueryHandler):
