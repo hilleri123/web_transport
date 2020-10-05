@@ -2,10 +2,15 @@ from flask_wtf import FlaskForm
 from wtforms import TextField, BooleanField, SelectField, IntegerField, SubmitField, RadioField, FloatField, FieldList, FormField, DateTimeField, PasswordField
 from wtforms.validators import Required, ValidationError, Email, EqualTo
 
+from wtforms.fields.html5 import DateTimeLocalField
+
+from datetime import datetime
+
 from .models import User
 
 
 def _required(form, field):
+    print(field, bool(not field.raw_data or not field.raw_data[0]))
     if not field.raw_data or not field.raw_data[0]:
         raise ValidationError('Field is required')
 
@@ -122,7 +127,7 @@ class FExchange_rates(MyForm):
     form_name = "Добавить курс валют"
 
 class FPrepared_cars(MyForm):
-    car = SelectField('Номер машины', validators = [_required])
-    id_type = SelectField('Тип машины', validators = [_required])
-    date_in = DateTimeField('Дата поступления', validators = [_required])
+    car_id = SelectField('Номер машины', validators = [_required])
+    date_in = DateTimeLocalField('Дата поступления', default=datetime.today, format='%Y-%m-%dT%H:%M')
     form_name = "Добавить Машину"
+

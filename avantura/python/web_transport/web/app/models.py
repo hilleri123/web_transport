@@ -67,17 +67,10 @@ class Client_rates(db.Model):
 
 
 
-class Prepared_cars(db.Model):
+class Cars(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
-    car =  db.Column(db.Integer, db.ForeignKey('car_numbers.id'))
-    id_type = db.Column(db.Integer, db.ForeignKey('car_types.id'))
+    car_id =  db.Column(db.Integer, db.ForeignKey('car_numbers.id'))
     date_in = db.Column(db.DateTime())
-
-class Spent_cars(db.Model):
-    id = db.Column(db.Integer,  primary_key = True)
-    car_id = db.Column(db.Integer, db.ForeignKey('car_numbers.id'))
-    car =  db.Column(db.Integer, db.ForeignKey('car_numbers.id'))
-    id_type = db.Column(db.Integer, db.ForeignKey('car_types.id'))
     date_out = db.Column(db.DateTime(), nullable = True)
 
 

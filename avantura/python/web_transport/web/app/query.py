@@ -55,25 +55,6 @@ class QClients(MainQueryHandler):
         return FClients()
 
 
-class QCars(MainQueryHandler):
-    def name():
-        return 'cars'
-
-    def get_visible_clm_names():
-        return ['Машина', 'Тип машины', 'Дата поступления', 'Дата закрытия']
-
-    def get_visible_data():
-        return [[i.car_id] for i in __class__.query.all()]
-
-    def add_row(text = ''):
-        spliter = '@'
-        tmp_list = text.split('@')
-        tmp = __class__(name=tmp_list[0], group_name=tmp_list[1], count=int(tmp_list[2]))
-        db.session.add(tmp)
-        db.session.commit()
-
-
-
 class QPrepared_cars(MainQueryHandler):
     def name():
         return 'prepared_cars'
@@ -82,17 +63,22 @@ class QPrepared_cars(MainQueryHandler):
         return ['Машина', 'Тип машины', 'Дата поступления']
 
     def get_visible_data():
-        return [[i.car, i.id_type, i.date_in] for i in Prepared_cars.query.all()]
+        return [[Car_numbers.query.get(i.car_id).number,
+                    Car_types.query.get(Car_numbers.query.get(i.car_id).type_id).car_type,
+                    i.date_in] for i in Cars.query.filter(Cars.date_out.is_(None))]
 
     def add_row(form):
-        tmp = Exchange_rates(car=form.car.data, id_type=form.id_type.data, date_in=form.date_in.data)
+        tmp = Cars(car_id=form.car_id.data, date_in=form.date_in.data)
         try:
             db.session.add(tmp)
             db.session.commit()
         except sqlalchemy.exc.IntegrityError:
                 print("Prepared_cars try except!!!!!!") #!!!!!!!!!!
+
     def form():
-        return FPrepared_cars()
+        res = FPrepared_cars()
+        res.car_id.choices = [(i.id, i.number + " (" + Car_types.query.get(i.type_id).car_type + ")") for i in Car_numbers.query.all()]
+        return res
 
 
 class QSpent_cars(MainQueryHandler):
@@ -102,15 +88,18 @@ class QSpent_cars(MainQueryHandler):
         return ['№', 'Машина', 'Тип машины', 'Дата закрытия']
 
     def get_visible_data():
-        return [[i.car_id, i.car, i.id_type, i.date_out] for i in Spent_cars.query.all()]
+        return [[Car_numbers.query.get(i.car_id).number,
+                    Car_types.query.get(Car_numbers.query.get(i.car_id).type_id).car_type,
+                    i.date_in, i.date_out] for i in Cars.query.filter(Cars.date_out.isnot(None))]
 
     def add_row(form):
-        tmp = Exchange_rates(car=form.car.data, id_type=form.id_type.data, date_out=form.date_out.data)
-        try:
-            db.session.add(tmp)
-            db.session.commit()
-        except sqlalchemy.exc.IntegrityError:
-                print("Spent_cars try except!!!!!!") #!!!!!!!!!!
+        pass
+        #tmp = Exchange_rates(car=form.car.data, id_type=form.id_type.data, date_out=form.date_out.data)
+        #try:
+            #db.session.add(tmp)
+            #db.session.commit()
+        #except sqlalchemy.exc.IntegrityError:
+                #print("Spent_cars try except!!!!!!") #!!!!!!!!!!
 
 
 class QFinances(MainQueryHandler):

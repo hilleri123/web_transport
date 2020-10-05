@@ -60,6 +60,7 @@ def table_add():
     text_element = request.args.get('text_element')
 
     flash(text_element)
+    print(dbname, text_element)
     add_to_table(dbname, text_element)
 
     return ('', 204)
@@ -86,10 +87,13 @@ def add_function():
     dbname = request.args.get('dbname')
     form = create_table_edit_form(dbname)
     if request.method == 'POST':
+        print('val', form.submit.data, form.validate_on_submit())
         if form.validate_on_submit():
             if form.cancel.data:
                 return ('', 204) #!!!!!!!!НАДО ЗАКРЫТЬ ОКНО
             add_to_table(dbname, form)
+        else:
+            flash(form.errors)
 
     return ('', 204)
 
