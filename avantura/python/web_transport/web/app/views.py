@@ -6,7 +6,7 @@ from app import app, db, lm
 from .forms import LoginForm
 from .models import User, ROLE_USER, ROLE_ADMIN
 from .menu import create_main_menu
-from .tables import create_table_content, add_to_table, create_table_edit_form, table_html, form_html
+from .tables import create_table_content, add_to_table, create_table_edit_form, table_html, form_html, Table
 
 
 
@@ -78,8 +78,10 @@ def table():
 @app.route('/table-edit-form', methods=['GET', 'POST'])
 def table_edit_form():
     dbname = request.args.get('dbname')
-
-    return render_template(form_html(dbname), form=create_table_edit_form(dbname), dbname=dbname)
+    if dbname == 'clients':
+        return render_template("Clients_form_1.html", form=create_table_edit_form(dbname), dbname=dbname , source1=create_table_content("redakt1"), source2=create_table_content("redakt2"), source3=create_table_content("redakt3") )
+    table = Table(["aip","str"],[["aaadata","bbbbbb"],["data","rrrrrr"]])
+    return render_template(form_html(dbname),  form=create_table_edit_form(dbname), source=table, dbname=dbname)
 
 
 @app.route('/api/add', methods=['GET', 'POST'])
@@ -96,4 +98,3 @@ def add_function():
             flash(form.errors)
 
     return ('', 204)
-

@@ -38,15 +38,9 @@ def create_table_edit_form(text):
     table = html_class_to_table(text)
     return table.form()
 
-    
+
 
 def add_to_table(text, element = None):
     table = html_class_to_table(text)
     print(table, dir(table))
     table.add_row(element)
-    
-
-
-
-
-

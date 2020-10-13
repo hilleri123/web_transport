@@ -1,0 +1,79 @@
+<form method="post" action="/api/add?dbname={{dbname}}" id="addForm" name="{{dbname}}">
+
+  {{ form.csrf_token }}
+
+  <div class="dd1">{{form.form_name}}</div>
+
+  {% for field in form if field.name != "csrf_token" and field.name != "submit" and field.name != "cancel" %}
+	  <div class="dd2 corner">{{ field.label() }}</div>
+	  <div class="corner">
+      {% if field.type in ['SelectField'] %}
+        {{ field(class_="dd5") }}
+      {% else %}
+        {{ field(size=40, class_="") }}
+      {% endif %}
+	    {% for error in field.errors %}
+		    {{ error }}
+	    {% endfor %}
+	  </div>
+  {% endfor %}
+
+  <div class="dd2 corner" style="padding-bottom: 9.2px">
+    <label for="comment">Доставки</label>
+    </div>
+    <table class="corner redakting">
+  <tr>
+    {% for name in source1.clm_names %}
+      <th>{{name}}</th>
+    {% endfor %}
+  </tr>
+  {% for row in source1.data %}
+  <tr>
+    {% for element in row %}
+    <td>{{element}}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+  </table>
+
+  <div class="dd2 corner" style="padding-bottom: 9.2px">
+    <label for="comment">Финансы</label>
+    </div>
+  <table class="corner redakting">
+<tr>
+  {% for name in source2.clm_names %}
+    <th>{{name}}</th>
+  {% endfor %}
+</tr>
+{% for row in source2.data %}
+<tr>
+  {% for element in row %}
+  <td>{{element}}</td>
+  {% endfor %}
+</tr>
+{% endfor %}
+</table>
+
+
+<div class="dd2 corner" style="padding-bottom: 9.2px">
+  <label for="comment">Ставки и товары</label>
+  </div>
+  <table class="corner redakting">
+<tr>
+  {% for name in source3.clm_names %}
+    <th>{{name}}</th>
+  {% endfor %}
+</tr>
+{% for row in source3.data %}
+<tr>
+  {% for element in row %}
+  <td>{{element}}</td>
+  {% endfor %}
+</tr>
+{% endfor %}
+</table>
+
+  <div class="cancel0">{{ form.submit(onclick="PopUpHide()", class_="button7") }}</div>
+  <div class="cancel">{{ form.cancel(onclick="PopUpHide()", class_="button7") }}</div>
+
+</form>

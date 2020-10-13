@@ -91,7 +91,6 @@ class FClients(MyForm):
     phone = TextField('Телефон', validators = [_required])
     email = TextField('E-mail', validators = [_required])
     comment = TextField('Комментарий', validators = [_required])
-    rates = FieldList(FormField(FClient_rates))
     form_name = "Добавить клиента"
 
 
@@ -130,4 +129,3 @@ class FPrepared_cars(MyForm):
     car_id = SelectField('Номер машины', validators = [_required])
     date_in = DateTimeLocalField('Дата поступления', default=datetime.today, format='%Y-%m-%dT%H:%M')
     form_name = "Добавить Машину"
-

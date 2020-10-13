@@ -253,22 +253,20 @@ input{
 
 }
 .cancel{
-  padding-top:40px;
   padding-left: 20px;
   font-size: 20px;
   font-weight: 500;
   position: absolute;
   top: 0;
-  margin-top: 450px;
+  margin-top: 490px;
 }
 .cancel0{
-  padding-top:40px;
   margin-left: 340px;
   font-size: 20px;
   font-weight: 500;
   position: absolute;
   top: 0;
-  margin-top: 450px;
+  margin-top: 490px;
 }
 .save{
   padding-top:40px;
@@ -294,4 +292,8 @@ input{
 .button7:active {
   background: rgb(33,147,90);
   box-shadow: 0 3px rgb(33,147,90) inset;
+}
+.redakting {
+  width:440px;
+  font-size: 16px;
 }

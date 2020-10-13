@@ -31,13 +31,14 @@ class QUser(MainQueryHandler):
 
 
 class QClients(MainQueryHandler):
-    form_html = 'client_form.html'
+    form_html = 'Clients_form_1.html'
 
     def name():
         return 'clients'
 
     def get_visible_clm_names():
         return ['Маркировкa','Личные данные','Телефон', 'E-mail', 'Комментарий']
+
 
     def get_visible_data():
         return [[i.brand, ' '.join([i.Fname, i.Iname, i.Oname]), i.phone, i.email, i.comment] for i in Clients.query.all()]
@@ -53,6 +54,37 @@ class QClients(MainQueryHandler):
 
     def form():
         return FClients()
+
+class QClients_redakt1(MainQueryHandler):
+    def name():
+        return 'redakt1'
+
+    def get_visible_clm_names():
+        return ['Машина','Дата закрытия','Сумма','Закрыта']
+
+    # def get_visible_data():
+    #     return [[i.brand, ' '.join([i.Fname, i.Iname, i.Oname]), i.phone, i.email, i.comment] for i in Clients.query.all()]
+
+class QClients_redakt2(MainQueryHandler):
+    def name():
+        return 'redakt2'
+
+    def get_visible_clm_names():
+        return ['Дата','Сумма','Корректировка']
+
+    # def get_visible_data():
+    #     return [[i.brand, ' '.join([i.Fname, i.Iname, i.Oname]), i.phone, i.email, i.comment] for i in Clients.query.all()]
+
+class QClients_redakt3(MainQueryHandler):
+    def name():
+        return 'redakt3'
+
+    def get_visible_clm_names():
+        return ['Дата начала действия','Дата оканчания действия','Комментарий']
+
+    # def get_visible_data():
+    #     return [[i.brand, ' '.join([i.Fname, i.Iname, i.Oname]), i.phone, i.email, i.comment] for i in Clients.query.all()]
+
 
 
 class QPrepared_cars(MainQueryHandler):
