@@ -46,8 +46,10 @@ class QClients(MainQueryHandler):
     def add_row(form):
         #tmp = Product_groups(name=form.data.get('name'))
         tmp = Clients(brand=form.brand.data, Fname=form.Fname.data, Iname=form.Iname.data, Oname=form.Oname.data, phone=form.phone.data, email = form.email.data, comment = form.comment.data)
+        tmp1 = Finances(clients=form.brand.data,  Progress_sum='0', Now_sum='0', Paid='0', Overall='0', Days='0')
         try:
             db.session.add(tmp)
+            db.session.add(tmp1)
             db.session.commit()
         except sqlalchemy.exc.IntegrityError:
             print("Product_groups try except!!!!!!") #!!!!!!!!!!
@@ -134,20 +136,27 @@ class QSpent_cars(MainQueryHandler):
                 #print("Spent_cars try except!!!!!!") #!!!!!!!!!!
 
 
+
+
 class QFinances(MainQueryHandler):
+    def name():
+        return 'finances'
+
     def get_visible_clm_names():
-        return ['Группа товара']
+        return ['Клиент Маркировкa(Маркировкa)','Сумма по машинам в пути($)','К оплате($)','Оплачено($)','Итого($)','Дней с разгрузки']
 
     def get_visible_data():
-        return [[i.name] for i in __class__.query.all()]
+        return [[i.clients, i.Progress_sum, i.Now_sum, i.Paid, i.Overall, i.Days] for i in Finances.query.all()]
 
-    def add_row(text = ''):
-        print('Adding', text)
-        spliter = '@'
-        tmp_list = text.split('@')
-        tmp = __class__(name=tmp_list[0], group_name=tmp_list[1], count=int(tmp_list[2]))
-        db.session.add(tmp)
-        db.session.commit()
+    def add_row(form):
+        tmp = Finances(clients=form.clients.data, Progress_sum=form.Progress_sum.data, Now_sum=form.Now_sum.data, Paid=form.Paid.data, Overall=form.Overall.data, Days=form.Days.data)
+        try:
+            db.session.add(tmp)
+            db.session.commit()
+        except sqlalchemy.exc.IntegrityError:
+                print("Finances try except!!!!!!") #!!!!!!!!!!
+    def form():
+        return FFinances()
 
 
 

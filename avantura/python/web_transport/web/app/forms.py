@@ -93,7 +93,13 @@ class FClients(MyForm):
     comment = TextField('Комментарий', validators = [_required])
     form_name = "Добавить клиента"
 
-
+class FFinances(MyForm):
+    clients = TextField('Наименование', validators = [_required])
+    Progress_sum = IntegerField('Наименование', validators = [_required])
+    Now_sum = IntegerField('Наименование', validators = [_required])
+    Paid = IntegerField('Наименование', validators = [_required])
+    Overall = IntegerField('Наименование', validators = [_required])
+    Days = IntegerField('Наименование', validators = [_required])
 
 
 class FProducts(MyForm):

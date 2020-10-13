@@ -37,7 +37,8 @@ def create_main_menu():
     cars = MenuAction(len(res), 'cars', 'Машины', '', [prepared_cars, spent_cars])
     res.append(cars)
 
-    finances = MenuAction(len(res), 'finances', 'Финансы', '')
+    finances_child = MenuAction(len(res), 'finances', 'Финансы', '')
+    finances = MenuAction(len(res), 'finances_main', 'Финансы', '', [finances_child])
     res.append(finances)
 
     exchange_rates = MenuAction(len(res), 'exchange_rates', 'Курсы валют', '')

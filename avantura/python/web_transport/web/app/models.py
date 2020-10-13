@@ -77,6 +77,12 @@ class Cars(db.Model):
 
 class Finances(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    clients = db.Column(db.Integer, db.ForeignKey('clients.id'))
+    Progress_sum = db.Column(db.Integer)
+    Now_sum = db.Column(db.Integer)
+    Paid = db.Column(db.Integer)
+    Overall = db.Column(db.Integer)
+    Days = db.Column(db.Integer)
 
 
 
