@@ -51,14 +51,7 @@
   </div>
   <div class="right-corner">
     <div class="menu1">
-        <div class="texter" id="texter">
-        </div>
-        <span class="red" onclick="javascript:PopUpShow()">
-        </span>
-        <span class="plus" onclick="window.location='http://google.com';">
-        </span>
-        <div class="table1">
-        <div id="place_for_table"></div>
+      <div id="place_for_table"></div>
   </div>
   </div>
   </div>
@@ -109,14 +102,9 @@
 <script>//Таблица + форма
 {% for parent_action in menu %}
   {% if parent_action.html_class %}
-    {% for action in parent_action.children %}
+    {% for action in parent_action.children_actions() %}
     $(function {{action.unique_class}}() {
       $('.{{action.unique_class}}').click(function() {
-        var change = document.getElementById("texter"); //Замена титульника
-        if (change.innerHTML != "{{action.text}}")
-        {
-          change.innerHTML = "{{action.text}}";
-        }
         $.ajax({    //Получение таблицы
           url: '/table',
           type: 'get',

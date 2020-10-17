@@ -10,8 +10,17 @@ class MainQueryHandler():
     table_html = 'table.html'
     form_html = 'form.html'
 
+    def get_visible_table_name():
+        return ''
+
+    def inner_tables():
+        return []
+
     def name():
         return ''
+
+    def get_visible_tables():
+        return []
 
     def get_visible_clm_names():
         return []
@@ -31,7 +40,12 @@ class QUser(MainQueryHandler):
 
 
 class QClients(MainQueryHandler):
-    form_html = 'Clients_form_1.html'
+    #form_html = 'clients_form.html'
+    def get_visible_table_name():
+        return 'Клиенты'
+
+    def inner_tables():
+        return ['clients_dilivery', 'clients_finances', 'clients_rates_and_products']
 
     def name():
         return 'clients'
@@ -57,9 +71,12 @@ class QClients(MainQueryHandler):
     def form():
         return FClients()
 
-class QClients_redakt1(MainQueryHandler):
+class QClients_delivery(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Доставки'
+
     def name():
-        return 'redakt1'
+        return QClients.inner_tables()[0]
 
     def get_visible_clm_names():
         return ['Машина','Дата закрытия','Сумма','Закрыта']
@@ -67,9 +84,12 @@ class QClients_redakt1(MainQueryHandler):
     # def get_visible_data():
     #     return [[i.brand, ' '.join([i.Fname, i.Iname, i.Oname]), i.phone, i.email, i.comment] for i in Clients.query.all()]
 
-class QClients_redakt2(MainQueryHandler):
+class QClients_finances(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Финансы'
+
     def name():
-        return 'redakt2'
+        return QClients.inner_tables()[1]
 
     def get_visible_clm_names():
         return ['Дата','Сумма','Корректировка']
@@ -77,9 +97,12 @@ class QClients_redakt2(MainQueryHandler):
     # def get_visible_data():
     #     return [[i.brand, ' '.join([i.Fname, i.Iname, i.Oname]), i.phone, i.email, i.comment] for i in Clients.query.all()]
 
-class QClients_redakt3(MainQueryHandler):
+class QClients_rates_and_products(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Ставки и товары'
+
     def name():
-        return 'redakt3'
+        return QClients.inner_tables()[2]
 
     def get_visible_clm_names():
         return ['Дата начала действия','Дата оканчания действия','Комментарий']
@@ -90,6 +113,9 @@ class QClients_redakt3(MainQueryHandler):
 
 
 class QPrepared_cars(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Предварительные машины'
+
     def name():
         return 'prepared_cars'
 
@@ -116,6 +142,9 @@ class QPrepared_cars(MainQueryHandler):
 
 
 class QSpent_cars(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Закрытые машины'
+
     def name():
         return 'spent_cars'
     def get_visible_clm_names():
@@ -139,6 +168,9 @@ class QSpent_cars(MainQueryHandler):
 
 
 class QFinances(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Финансы'
+
     def name():
         return 'finances'
 
@@ -161,6 +193,9 @@ class QFinances(MainQueryHandler):
 
 
 class QExchange_rates(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Курсы валют'
+
     def name():
         return 'exchange_rates'
 
@@ -182,6 +217,9 @@ class QExchange_rates(MainQueryHandler):
 
 
 class QProduct_groups(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Группы товаров'
+
     def name():
         return 'product_groups'
 
@@ -205,6 +243,9 @@ class QProduct_groups(MainQueryHandler):
 
 
 class QProducts(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Товары'
+
     def name():
         return 'products'
 
@@ -232,6 +273,9 @@ class QProducts(MainQueryHandler):
 
 
 class QCar_types(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Типы машин'
+
     def name():
         return 'car_types'
 
@@ -254,6 +298,9 @@ class QCar_types(MainQueryHandler):
 
 
 class QCar_numbers(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Номера машин'
+
     def name():
         return 'car_numbers'
 
@@ -279,6 +326,9 @@ class QCar_numbers(MainQueryHandler):
 
 
 class QAdmin_employees(MainQueryHandler):
+    def get_visible_table_name():
+        return ''
+
     def name():
         return 'admin_employees'
 
@@ -300,6 +350,9 @@ class QAdmin_employees(MainQueryHandler):
 
 
 class QAdmin_clients(MainQueryHandler):
+    def get_visible_table_name():
+        return ''
+
     def name():
         return 'admin_clients'
 
@@ -323,6 +376,9 @@ class QAdmin_clients(MainQueryHandler):
 
 
 class QAdmin(MainQueryHandler):
+    def get_visible_table_name():
+        return ''
+
     def name():
         return 'admin'
 

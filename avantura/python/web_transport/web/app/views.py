@@ -6,7 +6,7 @@ from app import app, db, lm
 from .forms import LoginForm
 from .models import User, ROLE_USER, ROLE_ADMIN
 from .menu import create_main_menu
-from .tables import create_table_content, add_to_table, create_table_edit_form, table_html, form_html, Table
+from .tables import create_table_content, add_to_table, create_table_edit_form, table_html, form_html, create_inner_tables
 
 
 
@@ -70,18 +70,17 @@ def table_add():
 @app.route('/table')
 def table():
     dbname = request.args.get('dbname')
-    print(dbname)
+    print(dbname, create_table_content(dbname))
 
-    return render_template(table_html(dbname), source=create_table_content(dbname))
+    return render_template(table_html(dbname), tables=create_table_content(dbname))
 
 
 @app.route('/table-edit-form', methods=['GET', 'POST'])
 def table_edit_form():
     dbname = request.args.get('dbname')
-    if dbname == 'clients':
-        return render_template("Clients_form_1.html", form=create_table_edit_form(dbname), dbname=dbname , source1=create_table_content("redakt1"), source2=create_table_content("redakt2"), source3=create_table_content("redakt3") )
-    table = Table(["aip","str"],[["aaadata","bbbbbb"],["data","rrrrrr"]])
-    return render_template(form_html(dbname),  form=create_table_edit_form(dbname), source=table, dbname=dbname)
+    #if dbname == 'clients':
+        #return render_template(form_html(dbname), form=create_table_edit_form(dbname), dbname=dbname, tables=create_table_content("clients_inner") )
+    return render_template(form_html(dbname),  form=create_table_edit_form(dbname), inner_tables=create_inner_tables(dbname), dbname=dbname)
 
 
 @app.route('/api/add', methods=['GET', 'POST'])

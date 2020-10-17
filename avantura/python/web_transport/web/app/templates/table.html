@@ -1,15 +1,22 @@
-<table>
-<tr>
-  {% for name in source.clm_names %}
-    <th>{{name}}</th>
-  {% endfor %}
-</tr>
-{% for row in source.data %}
-<tr>
-  {% for element in row %}
-  <td>{{element}}</td>
-  {% endfor %}
-</tr>
+{% for table in tables %}
+  <div class="texter" id="texter">{{ table.label_text }}</div>
+  <span class="red" onclick="{{ table.onclick_add }}"></span>
+  <span class="plus" onclick="{{ table.onclick_edit }}"></span>
+  <div class="table1">
+  <table class="corner table">
+    <tr>
+      {% for name in table.clm_names %}
+        <th>{{name}}</th>
+      {% endfor %}
+    </tr>
+    {% for row in table.data %}
+    <tr>
+      {% for element in row %}
+        <td>{{element}}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
 {% endfor %}
-</table>
+
 
