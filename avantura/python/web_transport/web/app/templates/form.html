@@ -18,26 +18,9 @@
 	    {% endfor %}
 	  </div>
   {% endfor %}
-  {% for table in inner_tables %}
-    <div class="dd2 corner" style="padding-bottom: 9.2px">
-      <label for="comment">{{ table.label_text }}</label>
-    </div>
-    <table class="corner inner_table">
-      <tr>
-        {% for name in table.clm_names %}
-          <th>{{name}}</th>
-        {% endfor %}
-      </tr>
-      {% for row in table.data %}
-      <tr>
-        {% for element in row %}
-          <td>{{element}}</td>
-        {% endfor %}
-      </tr>
-      {% endfor %}
-    </table>
-  {% endfor %}
-
+  {% with tables=inner_tables %}
+  {% include 'table.html' %}
+  {% endwith %}
   <div class="cancel0">{{ form.submit(onclick="PopUpHide()", class_="button7") }}</div>
   <div class="cancel">{{ form.cancel(onclick="PopUpHide()", class_="button7") }}</div>
 
