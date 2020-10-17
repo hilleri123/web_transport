@@ -23,7 +23,11 @@
       <div style="overflow: auto;height: 430px">
         {% with inner_tables = table.inner_tables %}
           {% with target_hide = table.hide_add %}
-            {% include 'form.html' %}
+            {% with form = table.form %}
+              {% with dbname = table.dbname %}
+                {% include 'form.html' %}
+              {% endwith %}
+            {% endwith %}
           {% endwith %}
         {% endwith %}
       </div>

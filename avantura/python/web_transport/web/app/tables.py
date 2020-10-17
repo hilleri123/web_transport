@@ -20,6 +20,9 @@ class Table():
         self.inner_tables = [Table(html_class_to_table(inner_table), 'inner_', 'PopUpInnerTable'+str(i), 'PopHideInnerTable'+str(i), 'inner_target'+str(i))
             for i, inner_table in enumerate(main_query_handler.inner_tables())]
 
+        self.form = main_query_handler.form()
+        self.dbname = main_query_handler.name()
+
 def html_class_to_table(text):
     #print(text)
     for i in MainQueryHandler.__subclasses__():
