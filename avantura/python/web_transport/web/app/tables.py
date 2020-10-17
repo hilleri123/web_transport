@@ -5,11 +5,14 @@ from flask import render_template
 
 
 class Table():
-    def __init__(self, main_query_handler=None, onclick_add='javascript:PopUpShow()', onclick_edit=''):
+    def __init__(self, main_query_handler=None, onclick_add='PopUpShow', hide_add='PopUpHide', target_add='#popup1', onclick_edit=''):
         self.clm_names=main_query_handler.get_visible_clm_names()
         self.data=main_query_handler.get_visible_data()
         self.label_text=main_query_handler.get_visible_table_name()
         self.onclick_add = onclick_add
+        self.hide_add = hide_add
+        self.target_add = target_add
+
         self.onclick_edit = onclick_edit
 
 def html_class_to_table(text):
@@ -39,7 +42,8 @@ def create_table_content(text):
 
 def create_inner_tables(text):
     table = html_class_to_table(text)
-    inner_tables = [Table(html_class_to_table(inner_table), 'javascript:PopUpInnerTable'+str(i)+'()') for i, inner_table in enumerate(table.inner_tables())]
+    inner_tables = [Table(html_class_to_table(inner_table), 'PopUpInnerTable'+str(i), 'PopHideInnerTable'+str(i), 'inner_target'+str(i))
+            for i, inner_table in enumerate(table.inner_tables())]
     return inner_tables
 
 
