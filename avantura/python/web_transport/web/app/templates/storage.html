@@ -57,37 +57,10 @@
   </div>
   </div>
 </div>
-  <div class="b-popup" id="popup1">
-      <div class="b-popup-content">
-        <div style="overflow: auto;height: 430px"id="place_for_edit_form"></div>
-      </div>
-  </div>
-  <div class="b-popup" id="popup2">
-    <div class="b-popup-content">
-      <div style="overflow: auto;height: 430px"id="place_for_edit_form2"></div>
-    </div>
-    </div>
-    </div>
 </div>
 </div>
 </div>
 </body>
-
-<script>
-$(document).on('click','.red_form',function(){
-  $.ajax({        //Получение формы
-    url: '/table-edit-form-2',
-    type: 'get',
-    data: {dbname: 'clients_stavka'},
-    success: function(response) {
-      $('#place_for_edit_form2').html(response);
-},
-error: function(xhr) {
-  //Grisha do something
-}
-})
-});
-</script>
 
 <script>
 {% for parent_action in menu %}
@@ -104,31 +77,6 @@ error: function(xhr) {
     });
   {% endif %}
 {% endfor %}
-</script>
-<script>
-    $(document).ready(function(){
-        //Скрыть PopUp при загрузке страницы
-        PopUpHide();
-    });
-    $(document).ready(function(){
-        //Скрыть PopUp при загрузке страницы
-        PopUpHide2();
-    });
-    //Функция отображения PopUp
-    function PopUpShow(){
-        $("#popup1").show();
-    }
-    //Функция скрытия PopUp
-    function PopUpHide(){
-        $("#popup1").hide();
-
-    }
-    function PopUpShow2(){
-        $("#popup2").show();
-    }
-    function PopUpHide(){
-        $("#popup1").hide();
-    }
 </script>
 
 <script>//Таблица + форма
@@ -147,25 +95,25 @@ error: function(xhr) {
               url: '/table-edit-form',
               type: 'get',
               data: {dbname: '{{action.unique_class}}'},
-              success: function(response) {
-                $('#place_for_edit_form').html(response);   //Устанавливаем форму
+              //success: function(response) {
+                //$('#place_for_edit_form').html(response);   //Устанавливаем форму
+//
+                //$('#addForm').ajaxForm(function() {   //Для установленной формы ставим на submit(условный) подгрузку таблицы
+                  //var $dbname = document.getElementById("addForm").getAttribute("name");
+                  //$.ajax({
+                    //url : '/table',
+                    //type: 'get',
+                    //data: {dbname: $dbname},
+                    //success : function (response) {   //Сама подгрузка таблицы
+                        //$('#place_for_table').html(response);
+                    //},
+                    //error: function(xhr) {
+                      ////Grisha do something
+                    //}
+                  //})
+                //});
 
-                $('#addForm').ajaxForm(function() {   //Для установленной формы ставим на submit(условный) подгрузку таблицы
-                  var $dbname = document.getElementById("addForm").getAttribute("name");
-                  $.ajax({
-                    url : '/table',
-                    type: 'get',
-                    data: {dbname: $dbname},
-                    success : function (response) {   //Сама подгрузка таблицы
-                        $('#place_for_table').html(response);
-                    },
-                    error: function(xhr) {
-                      //Grisha do something
-                    }
-                  })
-                });
-
-              },
+              //},
               error: function(xhr) {
                 //Grisha do something
               }

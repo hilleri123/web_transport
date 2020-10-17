@@ -72,7 +72,8 @@ def table():
     dbname = request.args.get('dbname')
     print(dbname, create_table_content(dbname))
 
-    return render_template(table_html(dbname), tables=create_table_content(dbname))
+    print(render_template(table_html(dbname), tables=create_table_content(dbname), form=create_table_edit_form(dbname), inner_tables=create_inner_tables(dbname), dbname=dbname))
+    return render_template(table_html(dbname), tables=create_table_content(dbname), form=create_table_edit_form(dbname), inner_tables=create_inner_tables(dbname), dbname=dbname)
 
 
 @app.route('/table-edit-form', methods=['GET', 'POST'])
@@ -80,7 +81,7 @@ def table_edit_form():
     dbname = request.args.get('dbname')
     #if dbname == 'clients':
         #return render_template(form_html(dbname), form=create_table_edit_form(dbname), dbname=dbname, tables=create_table_content("clients_inner") )
-    return render_template(form_html(dbname),  form=create_table_edit_form(dbname), inner_tables=create_inner_tables(dbname), dbname=dbname)
+    return render_template(form_html(dbname), form=create_table_edit_form(dbname), inner_tables=create_inner_tables(dbname), dbname=dbname)
 
 
 @app.route('/api/add', methods=['GET', 'POST'])

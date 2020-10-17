@@ -18,10 +18,12 @@
 	    {% endfor %}
 	  </div>
   {% endfor %}
-  {% with tables=inner_tables %}
-  {% include 'table.html' %}
-  {% endwith %}
-  <div class="cancel0">{{ form.submit(onclick="PopUpHide()", class_="button7") }}</div>
-  <div class="cancel">{{ form.cancel(onclick="PopUpHide()", class_="button7") }}</div>
+  {% if inner_tables|length > 0 %}
+    {% with tables=inner_tables %}
+      {% include 'table.html' %}
+    {% endwith %}
+  {% endif %}
+  <div class="cancel0">{{ form.submit(onclick=target_hide+"()", class_="button7") }}</div>
+  <div class="cancel">{{ form.cancel(onclick=target_hide+"()", class_="button7") }}</div>
 
 </form>
