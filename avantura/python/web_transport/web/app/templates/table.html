@@ -2,7 +2,7 @@
   <div class="texter" id="texter">{{ table.label_text }}</div>
   <span class="red" onclick="javascript:{{ table.onclick_add }}()"></span>
   <span class="plus" onclick="javascript:{{ table.onclick_edit }}()"></span>
-  <div class="table1">
+  <div class={{ table.type }}>
   <table class="corner table">
     <tr>
       {% for name in table.clm_names %}
