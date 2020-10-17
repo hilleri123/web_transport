@@ -110,7 +110,45 @@ class QClients_rates_and_products(MainQueryHandler):
     # def get_visible_data():
     #     return [[i.brand, ' '.join([i.Fname, i.Iname, i.Oname]), i.phone, i.email, i.comment] for i in Clients.query.all()]
 
+class QStavki(MainQueryHandler):
+    def name():
+        return 'stavki'
 
+    def get_visible_clm_names():
+        return ['Группа товаров', 'Ставка', 'Валюта']
+
+    # def get_visible_data():
+    #     return [[i.group_tovar, i.stavka, i.currency] for i in stavki.query.all()]
+    #
+    # # def add_row(form):
+    #     tmp = Stavki(group_tovar=form.group_tovar.data, stavka=form.stavka.data, currency=form.currency.data)
+    #     try:
+    #         db.session.add(tmp)
+    #         db.session.commit()
+    #     except sqlalchemy.exc.IntegrityError:
+    #             print("stavki try except!!!!!!") #!!!!!!!!!!
+    # def form():
+    #     return FStavki()
+
+class QSpisokTovarov(MainQueryHandler):
+    def name():
+        return 'SpisokTovarov'
+
+    def get_visible_clm_names():
+        return ['№', 'Товар', 'Кол-во на паллете']
+
+    # def get_visible_data():
+    #     return [[i.number, i.tovar, i.quanity] for i in SpisokTovarov.query.all()]
+    #
+    # def add_row(form):
+    #     tmp = SpisokTovarov(number=form.number.data, tovar=form.tovar.data, quanity=form.quanity.data)
+    #     try:
+    #         db.session.add(tmp)
+    #         db.session.commit()
+    #     except sqlalchemy.exc.IntegrityError:
+    #             print("SpisokTovarov try except!!!!!!") #!!!!!!!!!!
+    # def form():
+    #     return FSpisokTovarov()
 
 class QPrepared_cars(MainQueryHandler):
     def get_visible_table_name():
