@@ -1,8 +1,8 @@
 {% for table in tables %}
-  <div class="texter" id="texter">{{ table.label_text }}</div>
-  <span class="red" onclick="javascript:{{ table.onclick_add }}()"></span>
-  <span class="plus" onclick="javascript:{{ table.onclick_edit }}()"></span>
-  <div class={{ table.type }}>
+  <div class="{{ table.prefix }}texter" id="texter">{{ table.label_text }}</div>
+  <span class="{{ table.prefix }}red" onclick="javascript:{{ table.onclick_add }}()"></span>
+  <span class="{{ table.prefix }}plus" onclick="javascript:{{ table.onclick_edit }}()"></span>
+  <div class="{{ table.prefix }}table1">
   <table class="corner table">
     <tr>
       {% for name in table.clm_names %}
