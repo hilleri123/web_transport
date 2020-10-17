@@ -1,48 +1,64 @@
 {% for table in tables %}
-  <div class="{{ table.prefix }}texter" id="{{ table.prefix }}texter">{{ table.label_text }}</div>
-  <span class="{{ table.prefix }}red" onclick="javascript:{{ table.onclick_add }}()"></span>
-  <span class="{{ table.prefix }}plus" onclick="javascript:{{ table.onclick_edit }}()"></span>
-  <div class="{{ table.prefix }}table1">
-    <table class="{{ table.prefix }}corner {{ table.prefix }}table">
-    <tr>
-      {% for name in table.clm_names %}
-        <th>{{name}}</th>
+  <div id="place_for_table_{{ table.dbname }}">
+    <div class="{{ table.prefix }}texter" id="{{ table.prefix }}texter">{{ table.label_text }}</div>
+    <span class="{{ table.prefix }}red" onclick="javascript:{{ table.onclick_add }}()"></span>
+    <span class="{{ table.prefix }}plus" onclick="javascript:{{ table.onclick_edit }}()"></span>
+    <div class="{{ table.prefix }}table1">
+      <table class="{{ table.prefix }}corner {{ table.prefix }}table">
+      <tr>
+        {% for name in table.clm_names %}
+          <th>{{name}}</th>
+        {% endfor %}
+      </tr>
+      {% for row in table.data %}
+      <tr>
+        {% for element in row %}
+          <td>{{element}}</td>
+        {% endfor %}
+      </tr>
       {% endfor %}
-    </tr>
-    {% for row in table.data %}
-    <tr>
-      {% for element in row %}
-        <td>{{element}}</td>
-      {% endfor %}
-    </tr>
-    {% endfor %}
-  </table>
-  </div>
-  <div class="b-popup {{ table.target_add }}" id="{{ table.target_add }}" style="display:none">
-    <div class="b-popup-content">
-      <div style="overflow: auto;height: 430px">
-        {% with inner_tables = table.inner_tables %}
-          {% with target_hide = table.hide_add %}
-            {% with form = table.form %}
-              {% with dbname = table.dbname %}
-                {% include 'form.html' %}
+    </table>
+    </div>
+    <div class="b-popup {{ table.target_add }}" id="{{ table.target_add }}" style="display:none">
+      <div class="b-popup-content">
+        <div style="overflow: auto;height: 430px">
+          {% with inner_tables = table.inner_tables %}
+            {% with target_hide = table.hide_add %}
+              {% with form = table.form %}
+                {% with dbname = table.dbname %}
+                  {% include 'form.html' %}
+                {% endwith %}
               {% endwith %}
             {% endwith %}
           {% endwith %}
-        {% endwith %}
+        </div>
       </div>
     </div>
+    <script>
+      //Функция отображения PopUp
+      function {{ table.onclick_add }}(){
+        $("#{{ table.target_add }}").show();
+      }
+      //Функция скрытия PopUp
+      function {{ table.hide_add }}(){
+        $("#{{ table.target_add }}").hide();
+      }
+      $('#{{ table.dbname }}_add_form').ajaxForm(function() {   //Для установленной формы ставим на submit(условный) подгрузку таблицы
+        $.ajax({
+          url : '/table',
+          type: 'get',
+          data: {dbname: '{{ table.dbname }}', inner: True},
+          success : function (response) {   //Сама подгрузка таблицы
+            $('#{{ table.place_for_table }}').html(response);
+          },
+          error: function(xhr) {
+            //Grisha do something
+          }
+        })
+      });
+  
+    </script>
   </div>
-  <script>
-    //Функция отображения PopUp
-    function {{ table.onclick_add }}(){
-      $("#{{ table.target_add }}").show();
-    }
-    //Функция скрытия PopUp
-    function {{ table.hide_add }}(){
-      $("#{{ table.target_add }}").hide();
-    }
-  </script>
 {% endfor %}
 
 

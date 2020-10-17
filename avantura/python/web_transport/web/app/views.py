@@ -70,10 +70,11 @@ def table_add():
 @app.route('/table')
 def table():
     dbname = request.args.get('dbname')
-    #print(dbname, create_table_content(dbname))
+    inner = request.args.get('inner')
+    print(dbname, inner, create_table_content(dbname))
 
     #print(render_template(table_html(dbname), tables=create_table_content(dbname), form=create_table_edit_form(dbname), inner_tables=create_inner_tables(dbname), dbname=dbname))
-    return render_template(table_html(dbname), tables=create_table_content(dbname))
+    return render_template(table_html(dbname), tables=create_table_content(dbname, inner=inner))
 
 
 @app.route('/table-edit-form', methods=['GET', 'POST'])
@@ -88,6 +89,7 @@ def table_edit_form():
 def add_function():
     dbname = request.args.get('dbname')
     form = create_table_edit_form(dbname)
+    print(dbname, form)
     if request.method == 'POST':
         print('val', form.submit.data, form.validate_on_submit())
         if form.validate_on_submit():

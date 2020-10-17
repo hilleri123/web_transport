@@ -23,6 +23,8 @@ class Table():
         self.form = main_query_handler.form()
         self.dbname = main_query_handler.name()
 
+        self.place_for_table = 'place_for_table_'+self.dbname 
+
 def html_class_to_table(text):
     #print(text)
     for i in MainQueryHandler.__subclasses__():
@@ -41,10 +43,13 @@ def form_html(text):
     return table.form_html
 
 
-def create_table_content(text):
+def create_table_content(text, inner=False):
     table = html_class_to_table(text)
     #print(table, dir(table))
     tables = [Table(html_class_to_table(i)) for i in table.get_visible_tables()]
+    if inner:
+        for i in tables:
+            i.prefix = 'inner_'
     tables.append(Table(table))
     return tables
 
