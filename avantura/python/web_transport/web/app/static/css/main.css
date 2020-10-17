@@ -268,7 +268,30 @@ td {
     background-color: rgba(0,0,0,0.5);
     overflow:hidden;
     position:fixed;
+    left:0px;
+    right:0px;
+    bottom:0px;
     top:0px;
+}
+.inner_target0{
+  z-index: 1;
+  background-color: rgba(0,0,0,0);
+}
+.inner_target1{
+  z-index: 2;
+  background-color: rgba(0,0,0,0);
+}
+.inner_target2{
+  z-index: 3;
+  background-color: rgba(0,0,0,0);
+}
+.inner_target3{
+  z-index: 4;
+  background-color: rgba(0,0,0,0);
+}
+.inner_target4{
+  z-index: 5;
+  background-color: rgba(0,0,0,0);
 }
 .b-popup .b-popup-content{
   font-size: 24px;
