@@ -1,9 +1,9 @@
 {% for table in tables %}
-  <div class="{{ table.prefix }}texter" id="texter">{{ table.label_text }}</div>
+  <div class="{{ table.prefix }}texter" id="{{ table.prefix }}texter">{{ table.label_text }}</div>
   <span class="{{ table.prefix }}red" onclick="javascript:{{ table.onclick_add }}()"></span>
   <span class="{{ table.prefix }}plus" onclick="javascript:{{ table.onclick_edit }}()"></span>
   <div class="{{ table.prefix }}table1">
-  <table class="corner table">
+    <table class="{{ table.prefix }}corner {{ table.prefix }}table">
     <tr>
       {% for name in table.clm_names %}
         <th>{{name}}</th>
