@@ -53,23 +53,27 @@ class Clients_rates_and_products(db.Model):
     data_end = db.Column(db.DateTime())
     comment = db.Column(db.String(2048), nullable = True)
 
+#delal grisha
 class Clients_rates_and_products_table1(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
     product_type = db.Column(db.Integer, db.ForeignKey('product_groups.id'))
     price = db.Column(db.Float)
     currency = db.Column(db.String(64))
 
+#delal grisha
 class Clients_rates_and_products_table2(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
     on = db.Column(db.Boolean)
     product = db.Column(db.String(256))
     quanity = db.Column(db.Float)
 
+#delal grisha
 class Prepared_cars_clients(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
     client = db.Column(db.Integer, db.ForeignKey('clients.id'))
     price = db.Column(db.String(256))
 
+#delal grisha
 class Prepared_cars_clients_stavka(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
     product_type = db.Column(db.Integer, db.ForeignKey('product_groups.id'))
@@ -77,6 +81,7 @@ class Prepared_cars_clients_stavka(db.Model):
     weight = db.Column(db.Float)
     cost = db.Column(db.Float)
 
+#delal grisha
 class Prepared_cars_clients_spisok(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
     on = db.Column(db.Boolean)
@@ -86,18 +91,20 @@ class Prepared_cars_clients_spisok(db.Model):
     weight_final = db.Column(db.Float)
     cost = db.Column(db.Float)
 
+#delal grisha
 class Clients_finances(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
     data = db.Column(db.DateTime())
     price = db.Column(db.Float)
     korrekt =db.Column(db.Boolean)
 
+#delal grisha
 class Clients_delivery(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
     car = db.Column(db.Integer, db.ForeignKey('car_numbers.id'))
     date = db.Column(db.DateTime())
     price = db.Column(db.Float)
-    close =db.Column(db.Boolean)
+    close = db.Column(db.Boolean)
 
 
 class Client_products(db.Model):
@@ -114,9 +121,6 @@ class Client_rates(db.Model):
     client = db.Column(db.Integer, db.ForeignKey('clients.id'))
     product = db.Column(db.Integer, db.ForeignKey('product_groups.id'))
     price = db.Column(db.Float)
-
-
-
 
 
 

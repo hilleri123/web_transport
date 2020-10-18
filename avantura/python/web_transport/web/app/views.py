@@ -91,7 +91,7 @@ def add_function():
     form = create_table_edit_form(dbname)
     print(dbname, form)
     if request.method == 'POST':
-        print('val', form.submit.data, form.validate_on_submit())
+        #print('val', form.submit.data, form.validate_on_submit())
         if form.validate_on_submit():
             if form.cancel.data:
                 return ('', 204) #!!!!!!!!НАДО ЗАКРЫТЬ ОКНО

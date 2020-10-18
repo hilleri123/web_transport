@@ -1,5 +1,8 @@
 import sqlalchemy
 
+from werkzeug.datastructures import MultiDict
+
+
 from .models import *
 from .forms import *
 
@@ -119,9 +122,6 @@ class QClients_rates_and_products(MainQueryHandler):
     def name():
         return QClients.inner_tables()[2]
 
-    def inner_tables():
-        return ['Clients_rates_and_products_table1','Clients_rates_and_products_table2']
-
     def get_visible_clm_names():
         return ['Дата начала действия','Дата оканчания действия','Комментарий']
 
@@ -129,33 +129,24 @@ class QClients_rates_and_products(MainQueryHandler):
         return [[i.data_start, i.data_end, i.comment] for i in Clients_rates_and_products.query.all()]
 
     def form():
-        return FClients_rates_and_products()
+        form = FClients_rates_and_products()
 
-class QClients_rates_and_products_table1(MainQueryHandler):
-    def get_visible_table_name():
-        return 'Ставки'
+        rate = FClients_rate_inner()
+        form.rates.append_entry(rate)
+        for rate in form.rates:
+            rate.product_group.data = 'aaa'
+            rate.rate.data = 0
+            rate.currency.choices = [(1, '$'), (2, '^')]
+        #form.rates.clm_names = ['Группа товаров','Ставка','Валюта']
+        form.rates.clm_names = [i.label.text for i in [rate.product_group,rate.rate,rate.currency]]
 
-    def name():
-        return QClients_rates_and_products.inner_tables()[0]
-
-    def get_visible_clm_names():
-        return ['Группа товаров','Ставка','Валюта']
-
-    def get_visible_data():
-        return [[Product_groups.query.get(i.product_type).name, i.price, i.currency] for i in Clients_rates_and_products_table1.query.all()]
-
-class QClients_rates_and_products_table2(MainQueryHandler):
-    def get_visible_table_name():
-        return 'Список товаров'
-
-    def name():
-        return QClients_rates_and_products.inner_tables()[1]
-
-    def get_visible_clm_names():
-        return ['Вкл\Выкл','Товар','Кол-во на паллете']
-
-    def get_visible_data():
-        return [[i.on, Products.query.get(i.product).name, Products.query.get(i.quanity).count] for i in Clients_rates_and_products_table2.query.all()]
+        product = FClients_product_inner()
+        form.products.append_entry(product)
+        for product in form.products:
+            product.product_name.data = 'bbb'
+            product.count.data = 0
+        form.products.clm_names = [i.label.text for i in [product.checkbox, product.product_name, product.count]]
+        return form
 
 
 
