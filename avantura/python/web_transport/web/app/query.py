@@ -60,13 +60,13 @@ class QClients(MainQueryHandler):
     def add_row(form):
         #tmp = Product_groups(name=form.data.get('name'))
         tmp = Clients(brand=form.brand.data, Fname=form.Fname.data, Iname=form.Iname.data, Oname=form.Oname.data, phone=form.phone.data, email = form.email.data, comment = form.comment.data)
-        tmp1 = Finances(clients=form.brand.data,  Progress_sum='0', Now_sum='0', Paid='0', Overall='0', Days='0')
+        tmp1 = Finances(clients=len(Clients.query.all())+1,  Progress_sum=0, Now_sum=0, Paid=0, Overall=0, Days=0)
         try:
             db.session.add(tmp)
             db.session.add(tmp1)
             db.session.commit()
         except sqlalchemy.exc.IntegrityError:
-            print("Product_groups try except!!!!!!") #!!!!!!!!!!
+            print("Clients try except!!!!!!") #!!!!!!!!!!
 
     def form():
         return FClients()
@@ -81,8 +81,20 @@ class QClients_delivery(MainQueryHandler):
     def get_visible_clm_names():
         return ['Машина','Дата закрытия','Сумма','Закрыта']
 
-    # def get_visible_data():
-    #     return [[i.brand, ' '.join([i.Fname, i.Iname, i.Oname]), i.phone, i.email, i.comment] for i in Clients.query.all()]
+    def get_visible_data():
+         return [[i.car, i.date, i.price, i.close] for i in Clients_delivery.query.all()]
+
+    def add_row(form):
+        #tmp = Product_groups(name=form.data.get('name'))
+        tmp = Clients(car=form.car.data, date=form.date.data, price=form.price.data, close=form.close.data)
+        try:
+            db.session.add(tmp)
+            db.session.commit()
+        except sqlalchemy.exc.IntegrityError:
+            print("Product_groups try except!!!!!!") #!!!!!!!!!!
+
+    def form():
+        return FClients_delivery()
 
 class QClients_finances(MainQueryHandler):
     def get_visible_table_name():
@@ -94,8 +106,11 @@ class QClients_finances(MainQueryHandler):
     def get_visible_clm_names():
         return ['Дата','Сумма','Корректировка']
 
-    # def get_visible_data():
-    #     return [[i.brand, ' '.join([i.Fname, i.Iname, i.Oname]), i.phone, i.email, i.comment] for i in Clients.query.all()]
+    def get_visible_data():
+        return [[i.data, i.price, i.korrekt] for i in Clients_finances.query.all()]
+
+    def form():
+        return FClients_finances()
 
 class QClients_rates_and_products(MainQueryHandler):
     def get_visible_table_name():
@@ -104,18 +119,45 @@ class QClients_rates_and_products(MainQueryHandler):
     def name():
         return QClients.inner_tables()[2]
 
+    def inner_tables():
+        return ['Clients_rates_and_products_table1','Clients_rates_and_products_table2']
+
     def get_visible_clm_names():
         return ['Дата начала действия','Дата оканчания действия','Комментарий']
 
-    # def get_visible_data():
-    #     return [[i.brand, ' '.join([i.Fname, i.Iname, i.Oname]), i.phone, i.email, i.comment] for i in Clients.query.all()]
+    def get_visible_data():
+        return [[i.data_start, i.data_end, i.comment] for i in Clients_rates_and_products.query.all()]
 
-class QStavki(MainQueryHandler):
+    def form():
+        return FClients_rates_and_products()
+
+class QClients_rates_and_products_table1(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Ставки'
+
     def name():
-        return 'stavki'
+        return QClients_rates_and_products.inner_tables()[0]
 
     def get_visible_clm_names():
-        return ['Группа товаров', 'Ставка', 'Валюта']
+        return ['Группа товаров','Ставка','Валюта']
+
+    def get_visible_data():
+        return [[Product_groups.query.get(i.product_type).name, i.price, i.currency] for i in Clients_rates_and_products_table1.query.all()]
+
+class QClients_rates_and_products_table2(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Список товаров'
+
+    def name():
+        return QClients_rates_and_products.inner_tables()[1]
+
+    def get_visible_clm_names():
+        return ['Вкл\Выкл','Товар','Кол-во на паллете']
+
+    def get_visible_data():
+        return [[i.on, Products.query.get(i.product).name, Products.query.get(i.quanity).count] for i in Clients_rates_and_products_table2.query.all()]
+
+
 
     # def get_visible_data():
     #     return [[i.group_tovar, i.stavka, i.currency] for i in stavki.query.all()]
@@ -131,6 +173,9 @@ class QStavki(MainQueryHandler):
     #     return FStavki()
 
 class QSpisokTovarov(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Список товаров'
+
     def name():
         return 'SpisokTovarov'
 
@@ -153,6 +198,9 @@ class QSpisokTovarov(MainQueryHandler):
 class QPrepared_cars(MainQueryHandler):
     def get_visible_table_name():
         return 'Предварительные машины'
+
+    def inner_tables():
+        return ['Prepared_cars_clients']
 
     def name():
         return 'prepared_cars'
@@ -178,6 +226,60 @@ class QPrepared_cars(MainQueryHandler):
         res.car_id.choices = [(i.id, i.number + " (" + Car_types.query.get(i.type_id).car_type + ")") for i in Car_numbers.query.all()]
         return res
 
+class QPrepared_cars_clients(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Клиенты'
+
+    def inner_tables():
+        return ['Prepared_cars_clients_stavka', 'Prepared_cars_clients_spisok']
+
+    def name():
+        return QPrepared_cars.inner_tables()[0]
+
+    def get_visible_clm_names():
+        return ['Маркировкa','Сумма']
+
+    def get_visible_data():
+        return [[Clients.query.get(i.client).brand, i.price] for i in Prepared_cars_clients.query.all()]
+
+    def add_row(form):
+        tmp = Prepared_cars_clients(client=form.client.data, price=0)
+        try:
+            db.session.add(tmp)
+            db.session.commit()
+        except sqlalchemy.exc.IntegrityError:
+            print("Prepared_cars_clients try except!!!!!!") #!!!!!!!!!!
+
+    def form():
+        res = FPrepared_cars_clients()
+        res.client.choices = [(i.id, i.brand) for i in Clients.query.all()]
+        return res
+
+class QPrepared_cars_clients_stavka(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Ставки'
+
+    def name():
+        return QPrepared_cars_clients.inner_tables()[1]
+
+    def get_visible_clm_names():
+        return ['Группа товаров','Ставка','Общий вес, кол-во', 'Итого($)']
+
+    def get_visible_data():
+        return [[i.product_type, i.price, i.weight, i.price] for i in Prepared_cars_clients_stavka.query.all()]
+
+class QPrepared_cars_clients_spisok(MainQueryHandler):
+    def get_visible_table_name():
+        return 'Список товаров'
+
+    def name():
+        return QPrepared_cars_clients.inner_tables()[0]
+
+    def get_visible_clm_names():
+        return ['Товар','Кол-во на паллете', 'Вес, кол-во', 'Объем','Сумма($)']
+
+    def get_visible_data():
+        return [[i.product, i.quanity, i.weight, i.weight_final, i.cost] for i in Prepared_cars_clients_spisok.query.all()]
 
 class QSpent_cars(MainQueryHandler):
     def get_visible_table_name():
@@ -216,7 +318,7 @@ class QFinances(MainQueryHandler):
         return ['Клиент Маркировкa(Маркировкa)','Сумма по машинам в пути($)','К оплате($)','Оплачено($)','Итого($)','Дней с разгрузки']
 
     def get_visible_data():
-        return [[i.clients, i.Progress_sum, i.Now_sum, i.Paid, i.Overall, i.Days] for i in Finances.query.all()]
+        return [[Clients.query.get(i.clients).brand, i.Progress_sum, i.Now_sum, i.Paid, i.Overall, i.Days] for i in Finances.query.all()]
 
     def add_row(form):
         tmp = Finances(clients=form.clients.data, Progress_sum=form.Progress_sum.data, Now_sum=form.Now_sum.data, Paid=form.Paid.data, Overall=form.Overall.data, Days=form.Days.data)
@@ -269,8 +371,10 @@ class QProduct_groups(MainQueryHandler):
 
     def add_row(form):
         tmp = Product_groups(name=form.data.get('name'))
+        tmp1 =Clients_rates_and_products_table1( product_type = len(Product_groups.query.all())+1,  price=0, currency="$")
         try:
             db.session.add(tmp)
+            db.session.add(tmp1)
             db.session.commit()
         except sqlalchemy.exc.IntegrityError:
             print("Product_groups try except!!!!!!") #!!!!!!!!!!
@@ -296,8 +400,10 @@ class QProducts(MainQueryHandler):
     def add_row(form):
         value = dict(form.group.choices).get(form.group.data)
         tmp = Products(name=form.name.data, group_id=form.group.data, count=form.count.data)
+        tmp1 = Clients_rates_and_products_table2(on = False,  product=len(Products.query.all())+1, quanity=len(Products.query.all())+1)
         try:
             db.session.add(tmp)
+            db.session.add(tmp1)
             db.session.commit()
         except sqlalchemy.exc.IntegrityError:
             print("Products try except!!!!!!") #!!!!!!!!!!

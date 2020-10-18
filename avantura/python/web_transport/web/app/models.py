@@ -47,6 +47,59 @@ class Clients(db.Model):
     comment = db.Column(db.String(2048), nullable = True)
     #role = db.Column(db.SmallInteger, default = ROLE_USER)
 
+class Clients_rates_and_products(db.Model):
+    id = db.Column(db.Integer,  primary_key = True)
+    data_start = db.Column(db.DateTime())
+    data_end = db.Column(db.DateTime())
+    comment = db.Column(db.String(2048), nullable = True)
+
+class Clients_rates_and_products_table1(db.Model):
+    id = db.Column(db.Integer,  primary_key = True)
+    product_type = db.Column(db.Integer, db.ForeignKey('product_groups.id'))
+    price = db.Column(db.Float)
+    currency = db.Column(db.String(64))
+
+class Clients_rates_and_products_table2(db.Model):
+    id = db.Column(db.Integer,  primary_key = True)
+    on = db.Column(db.Boolean)
+    product = db.Column(db.String(256))
+    quanity = db.Column(db.Float)
+
+class Prepared_cars_clients(db.Model):
+    id = db.Column(db.Integer,  primary_key = True)
+    client = db.Column(db.Integer, db.ForeignKey('clients.id'))
+    price = db.Column(db.String(256))
+
+class Prepared_cars_clients_stavka(db.Model):
+    id = db.Column(db.Integer,  primary_key = True)
+    product_type = db.Column(db.Integer, db.ForeignKey('product_groups.id'))
+    price = db.Column(db.Float)
+    weight = db.Column(db.Float)
+    cost = db.Column(db.Float)
+
+class Prepared_cars_clients_spisok(db.Model):
+    id = db.Column(db.Integer,  primary_key = True)
+    on = db.Column(db.Boolean)
+    product = db.Column(db.String(256))
+    quanity = db.Column(db.Float)
+    weight = db.Column(db.Float)
+    weight_final = db.Column(db.Float)
+    cost = db.Column(db.Float)
+
+class Clients_finances(db.Model):
+    id = db.Column(db.Integer,  primary_key = True)
+    data = db.Column(db.DateTime())
+    price = db.Column(db.Float)
+    korrekt =db.Column(db.Boolean)
+
+class Clients_delivery(db.Model):
+    id = db.Column(db.Integer,  primary_key = True)
+    car = db.Column(db.Integer, db.ForeignKey('car_numbers.id'))
+    date = db.Column(db.DateTime())
+    price = db.Column(db.Float)
+    close =db.Column(db.Boolean)
+
+
 class Client_products(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
     client = db.Column(db.Integer, db.ForeignKey('clients.id'))

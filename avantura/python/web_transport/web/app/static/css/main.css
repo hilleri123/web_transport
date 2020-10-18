@@ -244,7 +244,7 @@ table {
   margin-right: 30px;
   margin-left:20px;
   overflow: scroll;
-  width: 440px;
+  width: 450px;
   border-collapse: collapse;
   line-height: 1.1;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
@@ -366,6 +366,6 @@ input{
   box-shadow: 0 3px rgb(33,147,90) inset;
 }
 .inner_table1 {
-  width:440px;
+  width:450px;
   font-size: 16px;
 }

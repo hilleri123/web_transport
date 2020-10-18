@@ -69,18 +69,16 @@ class RegisterForm(FlaskForm):
 
 
 
-class FClient_rates(FlaskForm):
-    product_group = ''
-    product_group_id = None
-    price = FloatField('Цена', validators = [_required])
+class FClients_delivery(MyForm):
+    form_name = "Доставки"
 
+class FClients_finances(MyForm):
+    form_name = "Финансы"
 
-class FClient_products(FlaskForm):
-    product = RadioField('Включить')
-    product = ''
-    product_id = None
-    price = FloatField('Кол-во', validators = [_required])
-
+class FClients_rates_and_products(MyForm):
+    data_start = DateTimeLocalField('Дата начала', default=datetime.today, format='%Y-%m-%dT%H:%M')
+    comment = TextField('Комментарий', validators = [_required])
+    form_name = "Ставки и товары"
 
 
 class FClients(MyForm):
@@ -135,3 +133,7 @@ class FPrepared_cars(MyForm):
     car_id = SelectField('Номер машины', validators = [_required])
     date_in = DateTimeLocalField('Дата поступления', default=datetime.today, format='%Y-%m-%dT%H:%M')
     form_name = "Добавить Машину"
+
+class FPrepared_cars_clients(MyForm):
+    client = SelectField('Наименование', validators = [_required])
+    form_name = "Добавить клиента"

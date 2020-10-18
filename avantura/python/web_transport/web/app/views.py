@@ -73,7 +73,7 @@ def table():
     inner = request.args.get('inner')
     print(dbname, inner, create_table_content(dbname))
 
-    #print(render_template(table_html(dbname), tables=create_table_content(dbname), form=create_table_edit_form(dbname), inner_tables=create_inner_tables(dbname), dbname=dbname))
+    # print(render_template(table_html(dbname), tables=create_table_content(dbname, inner=inner)))
     return render_template(table_html(dbname), tables=create_table_content(dbname, inner=inner))
 
 

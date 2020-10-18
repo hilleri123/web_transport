@@ -21,6 +21,7 @@
     </ul>
   {% endif %}
   {% endwith %}
+</hr>
   <div class="grid">
     <div class="left-corner">
       <div class="menu">
@@ -56,10 +57,7 @@
   </div>
   </div>
   </div>
-</div>
-</div>
-</div>
-</div>
+
 </body>
 
 <script>
@@ -91,10 +89,10 @@
           data: {dbname: '{{action.unique_class}}'},
           success: function(response) {  //Установка таблицы
             $('#place_for_table').html(response);
-            $.ajax({        //Получение формы
-              url: '/table-edit-form',
-              type: 'get',
-              data: {dbname: '{{action.unique_class}}'},
+            // $.ajax({        //Получение формы
+            //   url: '/table-edit-form',
+            //   type: 'get',
+            //   data: {dbname: '{{action.unique_class}}'},
               //success: function(response) {
                 //$('#place_for_edit_form').html(response);   //Устанавливаем форму
 //
@@ -114,10 +112,10 @@
                 //});
 
               //},
-              error: function(xhr) {
-                //Grisha do something
-              }
-            })
+              // error: function(xhr) {
+              //   //Grisha do something
+              // }
+            // })
           },
           error: function(xhr) {
             //Grisha do something

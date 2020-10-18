@@ -18,12 +18,14 @@
 	    {% endfor %}
 	  </div>
   {% endfor %}
-  {% if inner_tables|length > 0 %}
-    {% with tables=inner_tables %}
-      {% include 'table.html' %}
-    {% endwith %}
-  {% endif %}
   <div class="cancel0">{{ form.submit(onclick=target_hide+"()", class_="button7") }}</div>
   <div class="cancel">{{ form.cancel(onclick=target_hide+"()", class_="button7") }}</div>
 
 </form>
+<div>
+{% if inner_tables|length > 0 %}
+  {% with tables=inner_tables %}
+    {% include 'table.html' %}
+  {% endwith %}
+{% endif %}
+</div>
