@@ -244,12 +244,16 @@ table {
   margin-right: 30px;
   margin-left:20px;
   overflow: scroll;
+  max-width: 450px;
   width: 450px;
   border-collapse: collapse;
   line-height: 1.1;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   background:  radial-gradient(farthest-corner at 50% 50%, white, #DCECF8);
   color: #0C213B;
+}
+.input.rates-1-rate{
+  width:20px;
 }
 th {
   padding: 10px;
@@ -321,8 +325,16 @@ td {
   width: 292.8px;
   height:22px;
 }
-input{
+.inner_table input{
+  width:120px;
+  text-align: center;
 
+}
+.static_text{
+  cursor: default;
+  background-color: #f6f6f6;
+  border-width: 1px;
+  outline: none;
 }
 .cancel{
   padding-left: 20px;
