@@ -47,7 +47,7 @@
         $.ajax({
           url : '/table',
           type: 'get',
-          data: {dbname: '{{ table.dbname }}', inner: True},
+          data: {dbname: '{{ table.dbname }}', inner: {{ table.inner_for_html() }}},
           success : function (response) {   //Сама подгрузка таблицы
             $('#{{ table.place_for_table }}').html(response);
           },

@@ -15,6 +15,7 @@
           {% endfor %}
         </tr>
         {% for inner_form in field %}
+          {{ inner_form.csrf_token }}
           <tr>
             {% for inner_field in inner_form %}
               {% if inner_field.type in ['HiddenField'] or "csrf_token" in inner_field.name %}
@@ -33,7 +34,9 @@
         {% endfor %}
       </table>
     {% else %}
-	    <div class="dd2 corner">{{ field.label() }}</div>
+      {% if not field.type in ['HiddenField'] %}
+	      <div class="dd2 corner">{{ field.label() }}</div>
+      {% endif %}
 	    <div class="corner">
         {% if field.type in ['SelectField'] %}
           {{ field(class_="dd5") }}

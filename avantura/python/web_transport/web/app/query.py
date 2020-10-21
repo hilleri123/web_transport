@@ -34,7 +34,7 @@ class MainQueryHandler():
     def add_row(form):
         pass
 
-    def form():
+    def form(data=None, empty=False):
         return MyForm()
 
 
@@ -70,7 +70,7 @@ class QClients(MainQueryHandler):
         except sqlalchemy.exc.IntegrityError:
             print("Clients try except!!!!!!") #!!!!!!!!!!
 
-    def form():
+    def form(data=None, empty=False):
         return FClients()
 
 class QClients_delivery(MainQueryHandler):
@@ -95,7 +95,7 @@ class QClients_delivery(MainQueryHandler):
         except sqlalchemy.exc.IntegrityError:
             print("Product_groups try except!!!!!!") #!!!!!!!!!!
 
-    def form():
+    def form(data=None, empty=False):
         return FClients_delivery()
 
 class QClients_finances(MainQueryHandler):
@@ -111,7 +111,7 @@ class QClients_finances(MainQueryHandler):
     def get_visible_data():
         return [[i.data, i.price, i.korrekt] for i in Clients_finances.query.all()]
 
-    def form():
+    def form(data=None, empty=False):
         return FClients_finances()
 
 class QClients_rates_and_products(MainQueryHandler):
@@ -128,19 +128,30 @@ class QClients_rates_and_products(MainQueryHandler):
         return [[i.data_start, i.data_end, i.comment] for i in Clients_rates_and_products.query.all()]
 
     def add_row(form):
-        tmp = Clients(brand=form.brand.data, Fname=form.Fname.data, Iname=form.Iname.data, Oname=form.Oname.data, phone=form.phone.data, email = form.email.data, comment = form.comment.data)
-        tmp1 = Finances(clients=len(Clients.query.all())+1,  Progress_sum=0, Now_sum=0, Paid=0, Overall=0, Days=0)
+        print("clients_rates_and_products")
+        tmp = Clients_rates_and_products(date_start = form.date_start.data, comment = form.comment.data)
+
+        for rate in form.rates:
+            pass
+
+        for product in form.products:
+            pass
+
         try:
             db.session.add(tmp)
-            db.session.add(tmp1)
             db.session.commit()
         except sqlalchemy.exc.IntegrityError:
             print("Clients try except!!!!!!") #!!!!!!!!!!
 
-    def form():
+    def form(data=None, empty=False):
         form = FClients_rates_and_products()
 
+        if empty:
+            return form
+
+
         for product_group in Product_groups.query.all():
+            print("AAAAAAA", product_group)
             rate = FClients_rate_inner()
             form.rates.append_entry(rate)
             rate = form.rates[-1]
@@ -150,6 +161,7 @@ class QClients_rates_and_products(MainQueryHandler):
             rate.currency.choices = [(i.id, i.currency_symbol) for i in Currency_types.query.all()]
             if len(form.rates.clm_names) <= 0:
                 form.rates.clm_names = [i.label.text for i in [rate.product_group,rate.rate,rate.currency]]
+        print(len(form.rates))
         form.rates.table_name = 'Ставки по товарам'
 
         for product in Products.query.all():
@@ -177,7 +189,7 @@ class QClients_rates_and_products(MainQueryHandler):
     #         db.session.commit()
     #     except sqlalchemy.exc.IntegrityError:
     #             print("stavki try except!!!!!!") #!!!!!!!!!!
-    # def form():
+    # def form(data=None, empty=False):
     #     return FStavki()
 
 class QSpisokTovarov(MainQueryHandler):
@@ -200,7 +212,7 @@ class QSpisokTovarov(MainQueryHandler):
     #         db.session.commit()
     #     except sqlalchemy.exc.IntegrityError:
     #             print("SpisokTovarov try except!!!!!!") #!!!!!!!!!!
-    # def form():
+    # def form(data=None, empty=False):
     #     return FSpisokTovarov()
 
 class QPrepared_cars(MainQueryHandler):
@@ -229,7 +241,7 @@ class QPrepared_cars(MainQueryHandler):
         except sqlalchemy.exc.IntegrityError:
                 print("Prepared_cars try except!!!!!!") #!!!!!!!!!!
 
-    def form():
+    def form(data=None, empty=False):
         res = FPrepared_cars()
         res.car_id.choices = [(i.id, i.number + " (" + Car_types.query.get(i.type_id).car_type + ")") for i in Car_numbers.query.all()]
         return res
@@ -258,7 +270,7 @@ class QPrepared_cars_clients(MainQueryHandler):
         except sqlalchemy.exc.IntegrityError:
             print("Prepared_cars_clients try except!!!!!!") #!!!!!!!!!!
 
-    def form():
+    def form(data=None, empty=False):
         res = FPrepared_cars_clients()
         res.client.choices = [(i.id, i.brand) for i in Clients.query.all()]
         return res
@@ -335,7 +347,7 @@ class QFinances(MainQueryHandler):
             db.session.commit()
         except sqlalchemy.exc.IntegrityError:
                 print("Finances try except!!!!!!") #!!!!!!!!!!
-    def form():
+    def form(data=None, empty=False):
         return FFinances()
 
 
@@ -360,7 +372,7 @@ class QExchange_rates(MainQueryHandler):
             db.session.commit()
         except sqlalchemy.exc.IntegrityError:
                 print("Exchange_rates try except!!!!!!") #!!!!!!!!!!
-    def form():
+    def form(data=None, empty=False):
         return FExchange_rates()
 
 
@@ -379,15 +391,13 @@ class QProduct_groups(MainQueryHandler):
 
     def add_row(form):
         tmp = Product_groups(name=form.data.get('name'))
-        tmp1 =Clients_rates_and_products_table1( product_type = len(Product_groups.query.all())+1,  price=0, currency="$")
         try:
             db.session.add(tmp)
-            db.session.add(tmp1)
             db.session.commit()
         except sqlalchemy.exc.IntegrityError:
             print("Product_groups try except!!!!!!") #!!!!!!!!!!
 
-    def form():
+    def form(data=None, empty=False):
         return FProduct_groups()
 
 
@@ -416,7 +426,7 @@ class QProducts(MainQueryHandler):
         except sqlalchemy.exc.IntegrityError:
             print("Products try except!!!!!!") #!!!!!!!!!!
 
-    def form():
+    def form(data=None, empty=False):
         res = FProducts()
         res.group.choices = [(i.id, i.name) for i in Product_groups.query.all()]
         return res
@@ -445,7 +455,7 @@ class QCar_types(MainQueryHandler):
         except sqlalchemy.exc.IntegrityError:
             print("Car_types try except!!!!!!") #!!!!!!!!!!
 
-    def form():
+    def form(data=None, empty=False):
         return FCar_types()
 
 
@@ -470,7 +480,7 @@ class QCar_numbers(MainQueryHandler):
         except sqlalchemy.exc.IntegrityError:
             print("Car_numbers try except!!!!!!") #!!!!!!!!!!
 
-    def form():
+    def form(data=None, empty=False):
         res = FCar_numbers()
         res.car_type.choices = [(i.id, i.car_type) for i in Car_types.query.all()]
         return res

@@ -71,7 +71,11 @@ def table_add():
 def table():
     dbname = request.args.get('dbname')
     inner = request.args.get('inner')
-    print(dbname, inner, create_table_content(dbname))
+    if inner is None or inner == 'false':
+        inner = False
+    else:
+        inner = True
+    print('/TABLE', dbname, inner, create_table_content(dbname))
 
     # print(render_template(table_html(dbname), tables=create_table_content(dbname, inner=inner)))
     return render_template(table_html(dbname), tables=create_table_content(dbname, inner=inner))
@@ -88,10 +92,11 @@ def table_edit_form():
 @app.route('/api/add', methods=['GET', 'POST'])
 def add_function():
     dbname = request.args.get('dbname')
-    form = create_table_edit_form(dbname)
-    print(dbname, form)
+    form = None
+    if request.method == 'GET':
+        form = create_table_edit_form(dbname)
     if request.method == 'POST':
-        #print('val', form.submit.data, form.validate_on_submit())
+        form = create_table_edit_form(dbname, empty=True)
         if form.validate_on_submit():
             if form.cancel.data:
                 return ('', 204) #!!!!!!!!НАДО ЗАКРЫТЬ ОКНО

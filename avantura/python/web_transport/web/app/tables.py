@@ -17,6 +17,8 @@ class Table():
 
         self.onclick_edit = onclick_edit
 
+        self.inner = False
+
         self.inner_tables = [Table(html_class_to_table(inner_table), 'inner_', 'PopUpInnerTable'+str(i), 'PopHideInnerTable'+str(i), 'inner_target'+str(i))
             for i, inner_table in enumerate(main_query_handler.inner_tables())]
 
@@ -24,6 +26,12 @@ class Table():
         self.dbname = main_query_handler.name()
 
         self.place_for_table = 'place_for_table_'+self.dbname 
+
+    def inner_for_html(self):
+        if self.inner:
+            return 'true'
+        else:
+            return 'false'
 
 def html_class_to_table(text):
     #print(text)
@@ -50,6 +58,7 @@ def create_table_content(text, inner=False):
     if inner:
         for i in tables:
             i.prefix = 'inner_'
+            i.inner = True
     tables.append(Table(table))
     return tables
 
@@ -61,9 +70,9 @@ def create_inner_tables(text):
 
 
 
-def create_table_edit_form(text):
+def create_table_edit_form(text, empty=False):
     table = html_class_to_table(text)
-    return table.form()
+    return table.form(empty=empty)
 
 
 

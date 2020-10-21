@@ -50,8 +50,8 @@ class Clients(db.Model):
 class Clients_rates_and_products(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
     client_id = db.Column(db.Integer, db.ForeignKey('clients.id'))
-    data_start = db.Column(db.DateTime())
-    data_end = db.Column(db.DateTime(), nullable = True)
+    date_start = db.Column(db.DateTime())
+    date_end = db.Column(db.DateTime(), nullable = True)
     comment = db.Column(db.String(2048), nullable = True)
 
 class Currency_types(db.Model):
