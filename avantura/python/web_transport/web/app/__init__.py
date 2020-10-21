@@ -13,6 +13,8 @@ app = Flask(__name__)
 app.config.from_object('config')
 db = SQLAlchemy(app)
 
+
+
 lm = LoginManager()
 lm.session_protection = 'strong'
 lm.init_app(app)
@@ -20,5 +22,16 @@ lm.login_view = 'login'
 #oid = OpenID(app, os.path.join(basedir, 'tmp'))
 
 from app import views, models
+
+
+try:
+    tmp_currency = {'Доллар':'$', 'Евро':'&', 'Руболь':'Р'}
+    for name, symbol in tmp_currency.items():
+        tmp = models.Currency_types(currency_name=name, currency_symbol=symbol)
+        db.session.add(tmp)
+        db.session.commit()
+except:
+    pass
+
 
 

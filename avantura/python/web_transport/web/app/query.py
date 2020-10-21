@@ -61,7 +61,6 @@ class QClients(MainQueryHandler):
         return [[i.brand, ' '.join([i.Fname, i.Iname, i.Oname]), i.phone, i.email, i.comment] for i in Clients.query.all()]
 
     def add_row(form):
-        #tmp = Product_groups(name=form.data.get('name'))
         tmp = Clients(brand=form.brand.data, Fname=form.Fname.data, Iname=form.Iname.data, Oname=form.Oname.data, phone=form.phone.data, email = form.email.data, comment = form.comment.data)
         tmp1 = Finances(clients=len(Clients.query.all())+1,  Progress_sum=0, Now_sum=0, Paid=0, Overall=0, Days=0)
         try:
@@ -128,24 +127,42 @@ class QClients_rates_and_products(MainQueryHandler):
     def get_visible_data():
         return [[i.data_start, i.data_end, i.comment] for i in Clients_rates_and_products.query.all()]
 
+    def add_row(form):
+        tmp = Clients(brand=form.brand.data, Fname=form.Fname.data, Iname=form.Iname.data, Oname=form.Oname.data, phone=form.phone.data, email = form.email.data, comment = form.comment.data)
+        tmp1 = Finances(clients=len(Clients.query.all())+1,  Progress_sum=0, Now_sum=0, Paid=0, Overall=0, Days=0)
+        try:
+            db.session.add(tmp)
+            db.session.add(tmp1)
+            db.session.commit()
+        except sqlalchemy.exc.IntegrityError:
+            print("Clients try except!!!!!!") #!!!!!!!!!!
+
     def form():
         form = FClients_rates_and_products()
 
-        rate = FClients_rate_inner()
-        form.rates.append_entry(rate)
-        for rate in form.rates:
-            rate.product_group.data = 'aaa'
+        for product_group in Product_groups.query.all():
+            rate = FClients_rate_inner()
+            form.rates.append_entry(rate)
+            rate = form.rates[-1]
+            rate.product_group_id.data = product_group.id
+            rate.product_group.data = product_group.name
             rate.rate.data = 0
-            rate.currency.choices = [(1, '$'), (2, '^')]
-        #form.rates.clm_names = ['Группа товаров','Ставка','Валюта']
-        form.rates.clm_names = [i.label.text for i in [rate.product_group,rate.rate,rate.currency]]
+            rate.currency.choices = [(i.id, i.currency_symbol) for i in Currency_types.query.all()]
+            if len(form.rates.clm_names) <= 0:
+                form.rates.clm_names = [i.label.text for i in [rate.product_group,rate.rate,rate.currency]]
+        form.rates.table_name = 'Ставки по товарам'
 
-        product = FClients_product_inner()
-        form.products.append_entry(product)
-        for product in form.products:
-            product.product_name.data = 'bbb'
-            product.count.data = 0
-        form.products.clm_names = [i.label.text for i in [product.checkbox, product.product_name, product.count]]
+        for product in Products.query.all():
+            cl_product = FClients_product_inner()
+            form.products.append_entry(cl_product)
+            cl_product = form.products[-1]
+            cl_product.product_id.data = product.id
+            cl_product.product_name.data = product.name
+            cl_product.quanity.data = product.quanity
+            if len(form.products.clm_names) <= 0:
+                form.products.clm_names = [i.label.text for i in [cl_product.checkbox, cl_product.product_name, cl_product.quanity]]
+        form.products.table_name = 'Товары'
+
         return form
 
 
@@ -386,15 +403,15 @@ class QProducts(MainQueryHandler):
         return ['Наименование товара', 'Группа товара', 'Кол-во (по умолчанию)']
 
     def get_visible_data():
-        return [[i.name, Product_groups.query.get(i.group_id).name, i.count] for i in Products.query.all()]
+        return [[i.name, Product_groups.query.get(i.group_id).name, i.quanity] for i in Products.query.all()]
 
     def add_row(form):
         value = dict(form.group.choices).get(form.group.data)
-        tmp = Products(name=form.name.data, group_id=form.group.data, count=form.count.data)
-        tmp1 = Clients_rates_and_products_table2(on = False,  product=len(Products.query.all())+1, quanity=len(Products.query.all())+1)
+        tmp = Products(name=form.name.data, group_id=form.group.data, quanity=form.quanity.data)
+        #tmp1 = Clients_rates_and_products_table2(on = False,  product=len(Products.query.all())+1, quanity=len(Products.query.all())+1)
         try:
             db.session.add(tmp)
-            db.session.add(tmp1)
+            #db.session.add(tmp1)
             db.session.commit()
         except sqlalchemy.exc.IntegrityError:
             print("Products try except!!!!!!") #!!!!!!!!!!

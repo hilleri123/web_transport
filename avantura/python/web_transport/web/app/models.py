@@ -49,22 +49,29 @@ class Clients(db.Model):
 
 class Clients_rates_and_products(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
+    client_id = db.Column(db.Integer, db.ForeignKey('clients.id'))
     data_start = db.Column(db.DateTime())
-    data_end = db.Column(db.DateTime())
+    data_end = db.Column(db.DateTime(), nullable = True)
     comment = db.Column(db.String(2048), nullable = True)
 
-#delal grisha
-class Clients_rates_and_products_table1(db.Model):
+class Currency_types(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
-    product_type = db.Column(db.Integer, db.ForeignKey('product_groups.id'))
-    price = db.Column(db.Float)
-    currency = db.Column(db.String(64))
+    currency_name = db.Column(db.String(64), unique = True)
+    currency_symbol = db.Column(db.String(8), unique = True)
+    
 
-#delal grisha
-class Clients_rates_and_products_table2(db.Model):
+
+class Clients_rates_inner(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
-    on = db.Column(db.Boolean)
-    product = db.Column(db.String(256))
+    rates_and_products_id = db.Column(db.Integer, db.ForeignKey('clients_rates_and_products.id'))
+    product_type_id = db.Column(db.Integer, db.ForeignKey('product_groups.id'))
+    price = db.Column(db.Float)
+    currency_id = db.Column(db.Integer, db.ForeignKey('currency_types.id'))
+
+class Clients_products_inner(db.Model):
+    id = db.Column(db.Integer,  primary_key = True)
+    rates_and_products_id = db.Column(db.Integer, db.ForeignKey('clients_rates_and_products.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
     quanity = db.Column(db.Float)
 
 #delal grisha
@@ -165,8 +172,7 @@ class Products(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(256), unique = True)
     group_id = db.Column(db.Integer, db.ForeignKey('product_groups.id'))
-    count = db.Column(db.Integer)
-
+    quanity = db.Column(db.Integer)
 
 
 

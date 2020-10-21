@@ -7,6 +7,7 @@
 
   {% for field in form if field.name != "csrf_token" and not field.type in ['CSRFTokenField'] and field.name != "submit" and field.name != "cancel" %}
     {% if field.type in ['MyFieldList', 'FClients_product_list', 'FClients_rate_list'] %}
+      <div class="inner_texter">{{ field.table_name }}</div>
       <table class="inner_table inner_corner form_table">
         <tr>
           {% for clm_name in field.clm_names %}
@@ -17,9 +18,13 @@
           <tr>
             {% for inner_field in inner_form %}
               {% if inner_field.type in ['HiddenField'] or "csrf_token" in inner_field.name %}
-                {{ inner_field }}
               {% elif inner_field.type in ['TextField', 'StringField'] %}
-                <th>{{ inner_field(readonly="readonly", class="static_text") }}</th>
+                <th>
+                  {% if field.name in ['rates'] %}
+                    {{ inner_form.product_group_id }}
+                  {% endif %}
+                  {{ inner_field(readonly="readonly", class="static_text") }}
+                </th>
               {% else %}
                 <th>{{ inner_field }}</th>
               {% endif %}

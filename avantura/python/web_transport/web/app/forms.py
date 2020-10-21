@@ -25,6 +25,7 @@ class MyFieldList(FieldList):
     def __init__(self, *args, **kwargs):
         super(__class__, self).__init__(*args, **kwargs)
         self.clm_names = []
+        self.table_name = ''
     
 
 
@@ -83,7 +84,7 @@ class FClients_finances(MyForm):
 
 class FClients_rate_inner(FlaskForm):
     product_group = StringField('Группа товаров')
-    #product_group_id = HiddenField('Id группы товаров')
+    product_group_id = HiddenField('Id группы товаров')
     rate = FloatField('Ставка', validators = [_required])
     currency = SelectField('Валюта', validators = [_required])
 
@@ -91,8 +92,8 @@ class FClients_rate_inner(FlaskForm):
 class FClients_product_inner(FlaskForm):
     checkbox = BooleanField('Включение')
     product_name = StringField('Товар')
-    #product_id = HiddenField('Id товара')
-    count = IntegerField('Кол-во на паллете')
+    product_id = HiddenField('Id товара')
+    quanity = IntegerField('Кол-во на паллете')
 
 
 class FClients_rates_and_products(MyForm):
@@ -125,7 +126,7 @@ class FFinances(MyForm):
 class FProducts(MyForm):
     name = StringField('Наименование', validators = [_required])
     group = SelectField('Группа товаров', validators = [_required])
-    count = IntegerField('Кол-во на паллете', validators = [_required])
+    quanity = IntegerField('Кол-во на паллете', validators = [_required])
     form_name = "Добавить товар"
 
 class FProduct_groups(MyForm):
