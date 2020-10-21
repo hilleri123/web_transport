@@ -92,7 +92,7 @@ class FClients_rate_inner(FlaskForm):
     product_group = StringField('Группа товаров')
     product_group_id = HiddenField('Id группы товаров')
     rate = FloatField('Ставка')
-    currency = SelectField('Валюта')
+    currency = SelectField('Валюта', coerce=int)
 
 
 class FClients_product_inner(FlaskForm):
@@ -121,8 +121,11 @@ class FClients(CSRF_Form):
     phone = StringField('Телефон', validators = [_required])
     email = StringField('E-mail', validators = [_required])
     comment = StringField('Комментарий', validators = [_required])
+    rates = MyFieldList(FormField(FClients_rate_inner))
+    products = MyFieldList(FormField(FClients_product_inner))
     form_name = "Добавить клиента"
 
+#grish dolbaeb
 class FFinances(CSRF_Form):
     clients = StringField('Наименование', validators = [_required])
     Progress_sum = IntegerField('Наименование', validators = [_required])
@@ -134,7 +137,7 @@ class FFinances(CSRF_Form):
 
 class FProducts(CSRF_Form):
     name = StringField('Наименование', validators = [_required])
-    group = SelectField('Группа товаров', validators = [_required])
+    group = SelectField('Группа товаров', validators = [_required], coerce=int)
     quanity = IntegerField('Кол-во на паллете', validators = [_required])
     form_name = "Добавить товар"
 
@@ -150,11 +153,11 @@ class FCar_types(CSRF_Form):
 
 class FCar_numbers(CSRF_Form):
     number = StringField('Номер машины', validators = [_required])
-    car_type = SelectField('Тип машины', validators = [_required])
+    car_type = SelectField('Тип машины', validators = [_required], coerce=int)
     form_name = "Добавить машину"
 
 class FExchange_rates(CSRF_Form):
-    date = DateTimeField('Дата', validators = [_required])
+    date = DateTimeLocalField('Дата', default=datetime.today, format='%Y-%m-%dT%H:%M')
     currency_dollar = FloatField('Курс доллара', validators = [_required])
     currency_euro = FloatField('Курс евро', validators = [_required])
     comment = StringField('Комментарий', validators = [_required])
@@ -162,10 +165,42 @@ class FExchange_rates(CSRF_Form):
     form_name = "Добавить курс валют"
 
 class FPrepared_cars(CSRF_Form):
-    car_id = SelectField('Номер машины', validators = [_required])
+    car_id = SelectField('Номер машины', validators = [_required], coerce=int)
     date_in = DateTimeLocalField('Дата поступления', default=datetime.today, format='%Y-%m-%dT%H:%M')
     form_name = "Добавить Машину"
 
-class FPrepared_cars_clients(CSRF_Form):
-    client = SelectField('Наименование', validators = [_required])
+
+class FCar_client_products_inner(FlaskForm):
+    class Meta:
+        csrf_token = True
+    product_name = StringField('Товар')
+    product_id = HiddenField('Id товара')
+    quanity_default = StringField('Кол-во на паллете')
+    quanity = FloatField('Кол-во')
+    volume = StringField('Объем')
+    price = FloatField('Сумма')
+
+
+class FCar_client_rates_inner(FlaskForm):
+    class Meta:
+        csrf_token = True
+    product_group = StringField('Группа товаров')
+    product_group_id = HiddenField('Id группы товаров')
+    rate = StringField('Ставка')
+    quanity = FloatField('Кол-во')
+    result = SelectField('Итого')
+
+
+
+class FPrepared_car_clients(CSRF_Form):
+    client = SelectField('Наименование', validators = [_required], coerce=int)
+    rates = MyFieldList(FormField(FCar_client_rates_inner))
+    products = MyFieldList(FormField(FCar_client_products_inner))
     form_name = "Добавить клиента"
+
+class FPrepared_car_clients_inner(CSRF_Form):
+    rates = MyFieldList(FormField(FCar_client_rates_inner))
+    products = MyFieldList(FormField(FCar_client_products_inner))
+    form_name = "Ставки и товары"
+
+

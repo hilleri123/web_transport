@@ -1,0 +1,62 @@
+
+<form method="post" action="/api/add?dbname={{dbname}}" id="{{dbname}}_add_form" name="{{dbname}}">
+
+  {{ form.csrf_token }}
+
+  <div class="dd1">{{form.form_name}}</div>
+
+  {% for field in form if field.name != "csrf_token" and not field.type in ['CSRFTokenField'] and field.name != "submit" and field.name != "cancel" %}
+    {% if field.type in ['MyFieldList', 'FClients_product_list', 'FClients_rate_list'] %}
+      <div class="inner_texter">{{ field.table_name }}</div>
+      <table class="inner_table inner_corner form_table">
+        <tr>
+          {% for clm_name in field.clm_names %}
+            <th>{{ clm_name }} </th>
+          {% endfor %}
+        </tr>
+        {% for inner_form in field %}
+          {{ inner_form.csrf_token }}
+          <tr>
+            {% for inner_field in inner_form %}
+              {% if inner_field.type in ['HiddenField'] or "csrf_token" in inner_field.name %}
+              {% elif inner_field.type in ['TextField', 'StringField'] %}
+                <th>
+                  {% if field.name in ['rates'] %}
+                    {{ inner_form.product_group_id }}
+                  {% endif %}
+                  {{ inner_field(readonly="readonly", class="static_text") }}
+                </th>
+              {% else %}
+                <th>{{ inner_field }}</th>
+              {% endif %}
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      {% if not field.type in ['HiddenField'] %}
+	      <div class="dd2 corner">{{ field.label() }}</div>
+      {% endif %}
+	    <div class="corner">
+        {% if field.type in ['SelectField'] %}
+          {{ field(class_="dd5") }}
+        {% else %}
+          {{ field(size=40, class_="") }}
+        {% endif %}
+	      {% for error in field.errors %}
+		      {{ error }}
+	      {% endfor %}
+	    </div>
+    {% endif %}
+  {% endfor %}
+  <div class="cancel0">{{ form.submit(onclick=target_hide+"()", class_="button7") }}</div>
+  <div class="cancel">{{ form.cancel(onclick=target_hide+"()", class_="button7") }}</div>
+
+</form>
+<div>
+{% if inner_tables|length > 0 %}
+  {% with tables=inner_tables %}
+    {% include 'table.html' %}
+  {% endwith %}
+{% endif %}
+</div>

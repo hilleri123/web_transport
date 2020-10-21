@@ -50,7 +50,7 @@ class Clients(db.Model):
 class Clients_rates_and_products(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
     client_id = db.Column(db.Integer, db.ForeignKey('clients.id'))
-    date_start = db.Column(db.DateTime())
+    date_start = db.Column(db.DateTime(), nullable = True)
     date_end = db.Column(db.DateTime(), nullable = True)
     comment = db.Column(db.String(2048), nullable = True)
 
@@ -64,7 +64,7 @@ class Currency_types(db.Model):
 class Clients_rates_inner(db.Model):
     id = db.Column(db.Integer,  primary_key = True)
     rates_and_products_id = db.Column(db.Integer, db.ForeignKey('clients_rates_and_products.id'))
-    product_type_id = db.Column(db.Integer, db.ForeignKey('product_groups.id'))
+    product_group_id = db.Column(db.Integer, db.ForeignKey('product_groups.id'))
     price = db.Column(db.Float)
     currency_id = db.Column(db.Integer, db.ForeignKey('currency_types.id'))
 

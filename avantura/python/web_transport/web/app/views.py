@@ -84,19 +84,17 @@ def table():
 @app.route('/table-edit-form', methods=['GET', 'POST'])
 def table_edit_form():
     dbname = request.args.get('dbname')
+    base_data = request.args.get('base_data')
     #if dbname == 'clients':
         #return render_template(form_html(dbname), form=create_table_edit_form(dbname), dbname=dbname, tables=create_table_content("clients_inner") )
-    return render_template(form_html(dbname), form=create_table_edit_form(dbname), inner_tables=create_inner_tables(dbname), dbname=dbname)
+    return render_template(form_html(dbname), form=create_table_edit_form(dbname, data=base_data), inner_tables=create_inner_tables(dbname), dbname=dbname)
 
 
 @app.route('/api/add', methods=['GET', 'POST'])
 def add_function():
     dbname = request.args.get('dbname')
-    form = None
-    if request.method == 'GET':
-        form = create_table_edit_form(dbname)
+    form = create_table_edit_form(dbname, empty = (request.method == 'POST'))
     if request.method == 'POST':
-        form = create_table_edit_form(dbname, empty=True)
         if form.validate_on_submit():
             if form.cancel.data:
                 return ('', 204) #!!!!!!!!НАДО ЗАКРЫТЬ ОКНО

@@ -6,6 +6,7 @@ from flask import render_template
 
 class Table():
     def __init__(self, main_query_handler=None, table_prefix='', onclick_add='PopUpShow', hide_add='PopUpHide', target_add='popup1', onclick_edit=''):
+        self.handler=main_query_handler
         self.clm_names=main_query_handler.get_visible_clm_names()
         self.data=main_query_handler.get_visible_data()
         self.label_text=main_query_handler.get_visible_table_name()
@@ -17,10 +18,13 @@ class Table():
 
         self.onclick_edit = onclick_edit
 
-        self.inner = False
 
         self.inner_tables = [Table(html_class_to_table(inner_table), 'inner_', 'PopUpInnerTable'+str(i), 'PopHideInnerTable'+str(i), 'inner_target'+str(i))
             for i, inner_table in enumerate(main_query_handler.inner_tables())]
+
+        self.inner = False
+        for i in self.inner_tables:
+            i.inner = True
 
         self.form = main_query_handler.form()
         self.dbname = main_query_handler.name()
@@ -55,11 +59,11 @@ def create_table_content(text, inner=False):
     table = html_class_to_table(text)
     #print(table, dir(table))
     tables = [Table(html_class_to_table(i)) for i in table.get_visible_tables()]
+    tables.append(Table(table))
     if inner:
         for i in tables:
             i.prefix = 'inner_'
             i.inner = True
-    tables.append(Table(table))
     return tables
 
 def create_inner_tables(text):
@@ -70,9 +74,9 @@ def create_inner_tables(text):
 
 
 
-def create_table_edit_form(text, empty=False):
+def create_table_edit_form(text, data=None, empty=False):
     table = html_class_to_table(text)
-    return table.form(empty=empty)
+    return table.form(data=data, empty=empty)
 
 
 
