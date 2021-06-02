@@ -37,19 +37,21 @@ class LoginForm(FlaskForm):
     email = StringField('E-mail', validators = [Required(), Email()])
     password = PasswordField('passwprd', validators = [Required()])
     remember_me = BooleanField('remember_me', default = False)
-    submit = SubmitField('Log in')
+    #submit = SubmitField('Log in')
     #form_name = "login"
 
     def validate(self):
-        initial_validation = super(LoginForm, self).validate()
-        if not initial_validation:
-            return False
+        #initial_validation = super(LoginForm, self).validate()
+        #if not initial_validation:
+            #return False
+        print('sup val')
         user = User.query.filter_by(email=self.email.data).first()
         if not user:
-            self.email.errors.append('Unknown email')
+            #self.email.errors.append('Unknown email')
             return False
+        print('log val', user.verify_password(self.password.data), self.password.data)
         if not user.verify_password(self.password.data):
-            self.password.errors.append('Invalid password')
+            #self.password.errors.append('Invalid password')
             return False
         return True
 

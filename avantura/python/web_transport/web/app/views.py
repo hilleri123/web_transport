@@ -19,16 +19,24 @@ def index():
     return render_template("storage.html", menu = create_main_menu())
 
 
+class lmUser:
+    def __init__(self, db_id, active = True):
+        self.is_active = active
+        self.db_user = User.query.get(db_id)
+
+    def get_id(self):
+        self.db_user.id
 
 @app.route('/login', methods=['GET', 'POST'])
 #@oid.loginhandler
 def login():
     form = LoginForm()
 
-    if form.validate_on_submit():
+    #print(request.method, form.validate())
+    if request.method == 'POST' and form.validate():
         user = User.query.filter_by(email=form.email.data).first()
-        if user is not None and user.verify_password(form.password.data):
-            login_user(user)
+        if not user is None and user.verify_password(form.password.data):
+            login_user(lmUser(user.id))
             #redirect_url = request.args.get('next') or url_for('main.login')
             redirect_url = '/'
             return redirect(redirect_url)
@@ -39,7 +47,7 @@ def login():
 
 @lm.user_loader
 def load_user(user_id):
-    return User.get(user_id)
+    return lmUser(user_id)
 
 
 

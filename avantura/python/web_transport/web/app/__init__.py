@@ -25,6 +25,14 @@ from app import views, models
 
 
 try:
+    tmp_user = models.User(email='aa@a.ru', nickname='aaa_norm', client=1, role=1)
+    tmp_user.password = "123"
+    db.session.add(tmp_user)
+    db.session.commit()
+except:
+    pass
+
+try:
     tmp_currency = {'Доллар':'$', 'Евро':'&', 'Руболь':'Р'}
     for name, symbol in tmp_currency.items():
         tmp = models.Currency_types(currency_name=name, currency_symbol=symbol)
@@ -32,6 +40,8 @@ try:
         db.session.commit()
 except:
     pass
+
+
 
 
 
