@@ -41,6 +41,18 @@
       }
       //Функция скрытия PopUp
       function {{ table.hide_add }}(){
+        $.ajax({
+          url : '/table',
+          type: 'get',
+          data: {dbname: '{{ table.dbname }}', inner: {{ table.inner_for_html() }}},
+          success : function (response) {   //Сама подгрузка таблицы
+            $('#{{ table.place_for_table }}').html(response);
+          },
+          error: function(xhr) {
+            //Grisha do something
+          }
+        })
+
         $("#{{ table.target_add }}").hide();
       }
       $('#{{ table.dbname }}_add_form').ajaxForm(function() {   //Для установленной формы ставим на submit(условный) подгрузку таблицы
