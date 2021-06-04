@@ -63,7 +63,7 @@ def create_main_menu():
     admin = MenuAction(len(res), 'admin', 'Администрирование', '', False, [admin_employees, admin_clients])
     res.append(admin)
 
-    exit = MenuAction(len(res), 'exit', 'Выход', '')
+    exit = MenuAction(len(res), 'exit', 'Выход', "location.href = 'http://127.0.0.1:5000/login';")
     res.append(exit)
 
     return res
