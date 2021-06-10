@@ -195,7 +195,7 @@ class FCar_client_rates_inner(FlaskForm):
 
 
 class FPrepared_car_clients(CSRF_Form):
-    client = SelectField('Наименование', validators = [_required], coerce=int)
+    client = SelectField('Клиент', validators = [_required], coerce=int)
     #rates = MyFieldList(FormField(FCar_client_rates_inner))
     #products = MyFieldList(FormField(FCar_client_products_inner))
     form_name = "Добавить клиента"

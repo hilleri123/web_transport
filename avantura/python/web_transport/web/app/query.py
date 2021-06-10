@@ -268,7 +268,7 @@ class QPrepared_cars(MainQueryHandler):
         return res
 
 class QPrepared_car_clients(MainQueryHandler):
-    form_html = 'prepared_car_clients_form.html'
+    #form_html = 'prepared_car_clients_form.html'
     def get_visible_table_name():
         return 'Клиенты'
 
