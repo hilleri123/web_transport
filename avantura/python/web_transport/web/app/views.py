@@ -14,9 +14,15 @@ from .tables import create_table_content, add_to_table, create_table_edit_form, 
 
 @app.route('/')
 def index():
-    user = {'nickname' : 'Burgers'}
+    #user = {'nickname' : 'Burgers'}
     #return render_template("index.html", title = 'Home', user = user)
-    return render_template("storage.html", menu = create_main_menu())
+    try:
+        user = load_user()
+        return render_template("storage.html", menu = create_main_menu())
+    except:
+        redirect_url = '/login'
+        return redirect(redirect_url)
+
 
 
 class lmUser:
