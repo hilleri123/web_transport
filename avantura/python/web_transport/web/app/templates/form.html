@@ -50,7 +50,7 @@
     {% endif %}
   {% endfor %}
   <div class="cancel0">{{ form.submit(onclick=target_hide+"()", class_="button7") }}</div>
-  <div class="cancel">{{ form.cancel(onclick=target_hide+"()", class_="button7") }}</div>
+  <div class="cancel"><a class="button7 submit" onclick={{target_hide+"()"}}>Cancel</a></div>
 
 </form>
 <div>

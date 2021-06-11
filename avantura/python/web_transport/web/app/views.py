@@ -17,7 +17,7 @@ def index():
     #user = {'nickname' : 'Burgers'}
     #return render_template("index.html", title = 'Home', user = user)
     try:
-        user = load_user()
+        user = current_user
         return render_template("storage.html", menu = create_main_menu())
     except:
         redirect_url = '/login'
