@@ -13,12 +13,16 @@ from .tables import create_table_content, add_to_table, create_table_edit_form, 
 
 
 @app.route('/')
+#@login_required
 def index():
     #user = {'nickname' : 'Burgers'}
     #return render_template("index.html", title = 'Home', user = user)
     try:
+        if session['nickname'] == None:
+            redirect_url = '/login'
+            return redirect(redirect_url)
         user = current_user
-        return render_template("storage.html", menu = create_main_menu())
+        return render_template("storage.html", menu = create_main_menu(), username = session['nickname'])
     except:
         redirect_url = '/login'
         return redirect(redirect_url)
@@ -44,7 +48,9 @@ def login():
         if not user is None and user.verify_password(form.password.data):
             login_user(lmUser(user.id))
             #redirect_url = request.args.get('next') or url_for('main.login')
+            session['nickname'] = current_user.db_user.nickname
             redirect_url = '/'
+            print('logged in successfully')
             return redirect(redirect_url)
 
     return render_template("login.html", title = 'sign in', form = form)
@@ -63,9 +69,12 @@ def before_request():
 
 
 @app.route('/logout')
+#@login_required
 def logout():
+    session['nickname'] = None
     logout_user()
-    return redirect(url_for('/'))
+    print(session['nickname'])
+    return redirect('/login')
 
 
 
